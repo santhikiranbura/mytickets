@@ -3,88 +3,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title></title>
+  <title>Booking Confirmation</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/1a63ab4674.js" crossorigin="anonymous"></script>
-  <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+            <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
   <style>
   ::-webkit-scrollbar {
-      width: 10px;
+      width: 5px;
     }
     ::-webkit-scrollbar-track {
       box-shadow: inset 0 0 5px white;
     }
     ::-webkit-scrollbar-thumb {
-      background-color:slateblue;
+      background-color:#6366F1;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background-color:slateblue;
+        background-color:#6366F1;
     }
   body {
     background: #fbfbfd;
 }
-  .book-form{
-  margin-left:auto;
-  margin-right:auto;
-  width:50%;
-  margin-top:2%;
-  background-color:white;
-  box-shadow:0px 3px 8px rgba(0,0,0,0.5);
-  }
-  .proceed{
-  width:100%;
-  margin:5px;
-  padding:5px;
-  color:white;
-  background-color:slateblue;
-  }
-  @media(max-width:768px){
-  .book-form{
-  width:90%;
-  }
-  }
+ 
   </style>
   </head>
   <body>
-  <div class="jumbotron text-center book-form">
- <div class="row">
- <div class="col-xl-5">
- <img src="/images/${image}" class="img-reponsive" style="width:200px;height:300px">
- </div>
- <div class="col-xl-6 text-left">
-<h5 class="heading">${movie_name}</h5>
-  
-  <h5 class="heading">${tname}</h5>
-  
-  <h5 class="heading">${bookingdate}</h5>
-  
-  <h5 class="heading">${time}</h5>
- 
-  <h5 class="heading">Seat nos : ${ticket}</h5>
-  
-  <h5 class="heading">Rs ${amount}</h5>
-  
-	</div>
-	</div>
-	<form action="/success" id="book" method="post">
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container px-5 py-12 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap ">
+      <img alt="ecommerce" class="mx-auto h-72 w-54  rounded" src="/images/${image}">
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">${tname}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">${movie_name}</h1>
+        <div class="flex mb-4">
+          <span class="flex items-center">
+            <span class="text-gray-600 ml-3">${bookingdate}</span>
+          </span>
+          <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+            ${time}
+          </span>
+        </div>
+        <p class="leading-relaxed font-bold">${ticket}</p>
+        <br>	
+        <div class="flex">
+          <span class="title-font font-medium text-2xl text-gray-900">Rs. ${amount}.00</span>
+        </div>
+        <form action="/success"  method="post">
 	<input type="hidden" name="tid" value="${tid}" >
     <input type="hidden" name="date" value="${bookingdate}" >
     <input type="hidden" name="mid" value="${mid}" >
     <input type="hidden" name="time" value="${time}" >
     <input type="hidden" name="seq" value="${ticket}" >
    <input type="hidden" name="amount" value="${amount}" >
-	<br>
-	<p style="color:slateblue">Your tickets will be send to this email</p>
-		<input class="form-control" id="email" name="email" value="${email}" placeholder="Enter Email" />
-		<br>
-	<button type="button" class="btn proceed" onclick="proceed()">Proceed</button>
-	</form>
-	</div>
-
+		<input class="form-control" id="email" name="email" value="${email}" placeholder="Enter Email" hidden />
+          <button type="submit" class="flex text-white bg-indigo-500 border-0 mt-4 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" >Proceed</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</section>
+	
   </body>
   </html>

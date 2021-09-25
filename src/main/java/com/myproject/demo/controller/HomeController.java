@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -228,6 +228,7 @@ public class HomeController {
 			if(temp!=null) {
 				Date current_date=formatter.parse(date);
 				if(current_date.compareTo(formatter.parse(temp.getEnd_date())) < 0 && current_date.compareTo(formatter.parse(temp.getStart_date())) >= 0 ){
+					
 					thes.add(theatresrepo.findById(temp.getTid()).orElse(null));
 					List<Timings> temp_times=timingsrepo.findAllByTid(id);
 					for(Timings temp_time:temp_times) {
@@ -304,9 +305,9 @@ public class HomeController {
 		mv.addObject("mid",mid);
 		return mv;
 	}
-	@RequestMapping(value="/{seating_plan}")
-	public ModelAndView seating_plan(@PathVariable("seating_plan") String plan,@RequestParam(value="tid") int tid,@RequestParam("time") String time,@RequestParam("date") String date,@RequestParam("mid") int mid) {
-		ModelAndView mv= new ModelAndView("plana.jsp");
+	@RequestMapping(value="/seatingplan",method=RequestMethod.POST)
+	public ModelAndView seating_plan(@RequestParam("plan") String plan,@RequestParam(value="tid") int tid,@RequestParam("time") String time,@RequestParam("date") String date,@RequestParam("mid") int mid) {
+		ModelAndView mv= new ModelAndView(plan+".jsp");
 		mv.addObject("bookingdate",date);
 		mv.addObject("mid",mid);
 		mv.addObject("time", time);
@@ -343,8 +344,8 @@ public class HomeController {
 		mv.addObject("amount",amount);
 		return mv;
 	}
-	@RequestMapping("/success")
-	public ModelAndView bookticket(@RequestParam("email") String email,@RequestParam("amount") String amount,@RequestParam("date") String date,@RequestParam("tid") int tid,@RequestParam("mid") int mid,@RequestParam("time") String time,@RequestParam("seq") String seq) throws AddressException, MessagingException,IOException {
+	@RequestMapping(value="/success",method=RequestMethod.POST)
+	public ModelAndView confirmbooking(@RequestParam("email") String email,@RequestParam("amount") String amount,@RequestParam("date") String date,@RequestParam("tid") int tid,@RequestParam("mid") int mid,@RequestParam("time") String time,@RequestParam("seq") String seq) throws AddressException, MessagingException,IOException {
 		List<String> booked = findbookedtickets(mid,tid,date,time);
 		String[]  ticket_list= seq.split(",");
 		boolean check=false;
@@ -362,12 +363,7 @@ public class HomeController {
 			b.setMid(mid);
 			b.setTid(tid);
 			b.setTime(time);
-			DateFormat dateFormat = new SimpleDateFormat("yyddmm");
-		    Date dates = new Date();
-		    String dt=String.valueOf(dateFormat.format(dates));
-		    SimpleDateFormat times = new SimpleDateFormat("HHmm");
-		    String tm= String.valueOf(times.format(new Date()));//time in 24 hour format
-		    String id= dt+tm;
+		    String id = UUID.randomUUID().toString();
 			b.setTrans_id(id);
 			bookingsrepo.save(b);
 			Tickets tickets[]=new Tickets[ticket_list.length];
@@ -383,229 +379,6 @@ public class HomeController {
 			mv.addObject("tname",(theatresrepo.findById(tid).orElse(null)).getTname());
 			mv.addObject("b",b);
 			mv.addObject("seq",seq);
-			   Properties props = new Properties();
-			   props.put("mail.smtp.auth", "true");
-			   props.put("mail.smtp.starttls.enable", "true");
-			   props.put("mail.smtp.host", "smtp.gmail.com");
-			   props.put("mail.smtp.port", "587");
-			   
-			   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			      protected PasswordAuthentication getPasswordAuthentication() {
-			         return new PasswordAuthentication("noreplytomytickets@gmail.com", "python@123");
-			      }
-			   });
-			   Message msg = new MimeMessage(session);
-			   msg.setFrom(new InternetAddress("noreplytomytickets@gmail.com", false));
-
-			   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-			   msg.setSubject("Successfully Booked");
-			   msg.setContent("<!DOCTYPE html>\r\n" + 
-				   		"<html lang=\"en\">\r\n" + 
-				   		"<head>\r\n" + 
-				   		"  <title></title>\r\n" + 
-				   		"  <meta charset=\"utf-8\">\r\n" + 
-				   		"  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
-				   		"  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css\">\r\n" + 
-				   		"  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\r\n" + 
-				   		"  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js\"></script>\r\n" + 
-				   		"  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js\"></script>\r\n" + 
-				   		"  <script src=\"https://kit.fontawesome.com/1a63ab4674.js\" crossorigin=\"anonymous\"></script>\r\n" + 
-				   		"  <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>\r\n" + 
-				   		"  <style>\r\n" + 
-				   		"  ::-webkit-scrollbar {\r\n" + 
-				   		"      width: 10px;\r\n" + 
-				   		"    }\r\n" + 
-				   		"    ::-webkit-scrollbar-track {\r\n" + 
-				   		"      box-shadow: inset 0 0 5px white;\r\n" + 
-				   		"    }\r\n" + 
-				   		"    ::-webkit-scrollbar-thumb {\r\n" + 
-				   		"      background-color:slateblue;\r\n" + 
-				   		"    }\r\n" + 
-				   		"    ::-webkit-scrollbar-thumb:hover {\r\n" + 
-				   		"        background-color:slateblue;\r\n" + 
-				   		"    }\r\n" + 
-				   		"  body {\r\n" + 
-				   		"    background: #fbfbfd;\r\n" + 
-				   		"}\r\n" + 
-				   		"  .book-form{\r\n" + 
-				   		"  margin-left:auto;\r\n" + 
-				   		"  margin-right:auto;\r\n" + 
-				   		"  width:50%;\r\n" + 
-				   		"  margin-top:2%;\r\n" + 
-				   		"  padding-top:20px;\r\n" + 
-				   		"  background-color:white;\r\n" + 
-				   		"  box-shadow:0px 3px 8px rgba(0,0,0,0.5);\r\n" + 
-				   		"  }\r\n" + 
-				   		"  .proceed{\r\n" + 
-				   		"  width:100%;\r\n" + 
-				   		"  margin:5px;\r\n" + 
-				   		"  padding:5px;\r\n" + 
-				   		"  color:white;\r\n" + 
-				   		"  background-color:slateblue;\r\n" + 
-				   		"  }\r\n" + 
-				   		"  @media(max-width:768px){\r\n" + 
-				   		"  .book-form{\r\n" + 
-				   		"  width:90%;\r\n" + 
-				   		"  }\r\n" + 
-				   		"  }\r\n" + 
-				   		"\r\n" + 
-				   		".success{\r\n" + 
-				   		"text-align:left;\r\n" + 
-				   		"color:mediumseagreen;\r\n" + 
-				   		"} \r\n" + 
-				   		".check{\r\n" + 
-				   		"padding:12px;\r\n" + 
-				   		"margin:5px;\r\n" + 
-				   		"font-size:22px;\r\n" + 
-				   		"border-radius:50%;\r\n" + 
-				   		"background-color:mediumseagreen;\r\n" + 
-				   		"box-shadow:0px 3px 6px rgba(0,0,0,0.3);\r\n" + 
-				   		"color:white;\r\n" + 
-				   		" animation: example 2s infinite;\r\n" + 
-				   		"}\r\n" + 
-				   		"@keyframes example {\r\n" + 
-				   		"  from {border-radius: 0%;\r\n" + 
-				   		"  background-color:white;\r\n" + 
-				   		"  color:mediumseagreen;\r\n" + 
-				   		"  }\r\n" + 
-				   		"  to {border-radius:50%;\r\n" + 
-				   		"  background-color:mediumseagreen;\r\n" + 
-				   		"  color:white;\r\n" + 
-				   		"  }\r\n" + 
-				   		"}\r\n" + 
-				   		"  </style>\r\n" + 
-				   		"  </head>\r\n" + 
-				   		"  <body>\r\n" + 
-				   		"  <div class=\"jumbotron text-center book-form\">\r\n" + 
-				   		"          <h2 class=\"success\"><span class=\"check\"><i class=\"fas fa-check\"></i></span> Successfully Booked</h2>\r\n" + 
-				   		"  <br>\r\n" + 
-				   		" <div class=\"row\">\r\n" + 
-				   		" <div class=\"col-xl-5\">\r\n" + 
-//				   		" <img src=\"cid:image\" class=\"img-reponsive\" style=\"width:200px;height:300px\">\r\n" + 
-				   		" </div>\r\n" + 
-				   		" <div class=\"col-xl-6 text-left\">\r\n" + 
-				   		" <h5 class=\"heading\">Transaction Id: ${b.trans_id}</h5>\r\n" + 
-				   		"<h5 class=\"heading\">"+(movierepo.findById(mid).orElse(null)).getMovie_name()+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+(theatresrepo.findById(tid).orElse(null)).getTname()+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+date+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+time+"</h5>\r\n" + 
-				   		" \r\n" + 
-				   		"  <h5 class=\"heading\">"+seq+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+amount+"</h5>\r\n" + 
-				   		"	</div>\r\n" + 
-				   		"	</div>\r\n" + 
-				   		"	</div>\r\n" + 
-				   		"  </body>\r\n" + 
-				   		"  </html>", "text/html");
-			   msg.setSentDate(new Date());
-
-			   MimeBodyPart messageBodyPart = new MimeBodyPart();
-			   messageBodyPart.setContent("<!DOCTYPE html>\r\n" + 
-				   		"<html lang=\"en\">\r\n" + 
-				   		"<head>\r\n" + 
-				   		"  <title></title>\r\n" + 
-				   		"  <meta charset=\"utf-8\">\r\n" + 
-				   		"  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
-				   		"  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css\">\r\n" + 
-				   		"  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\r\n" + 
-				   		"  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js\"></script>\r\n" + 
-				   		"  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js\"></script>\r\n" + 
-				   		"  <script src=\"https://kit.fontawesome.com/1a63ab4674.js\" crossorigin=\"anonymous\"></script>\r\n" + 
-				   		"  <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>\r\n" + 
-				   		"  <style>\r\n" + 
-				   		"  ::-webkit-scrollbar {\r\n" + 
-				   		"      width: 10px;\r\n" + 
-				   		"    }\r\n" + 
-				   		"    ::-webkit-scrollbar-track {\r\n" + 
-				   		"      box-shadow: inset 0 0 5px white;\r\n" + 
-				   		"    }\r\n" + 
-				   		"    ::-webkit-scrollbar-thumb {\r\n" + 
-				   		"      background-color:slateblue;\r\n" + 
-				   		"    }\r\n" + 
-				   		"    ::-webkit-scrollbar-thumb:hover {\r\n" + 
-				   		"        background-color:slateblue;\r\n" + 
-				   		"    }\r\n" + 
-				   		"  body {\r\n" + 
-				   		"    background-color: slateblue;\r\n" + 
-				   		"}\r\n" + 
-				   		"  .book-form{\r\n" + 
-				   		"  margin-left:auto;\r\n" + 
-				   		"  margin-right:auto;\r\n" + 
-				   		"  width:50%;\r\n" + 
-				   		"  margin-top:2%;\r\n" + 
-				   		"  padding-top:20px;\r\n" + 
-				   		"  background-color:white;\r\n" + 
-				   		"  box-shadow:0px 3px 8px rgba(0,0,0,0.5);\r\n" + 
-				   		"  }\r\n" + 
-				   		"  .proceed{\r\n" + 
-				   		"  width:100%;\r\n" + 
-				   		"  margin:5px;\r\n" + 
-				   		"  padding:5px;\r\n" + 
-				   		"  color:white;\r\n" + 
-				   		"  background-color:slateblue;\r\n" + 
-				   		"  }\r\n" + 
-				   		"  @media(max-width:768px){\r\n" + 
-				   		"  .book-form{\r\n" + 
-				   		"  width:90%;\r\n" + 
-				   		"  }\r\n" + 
-				   		"  }\r\n" + 
-				   		"\r\n" + 
-				   		".success{\r\n" + 
-				   		"text-align:left;\r\n" + 
-				   		"color:mediumseagreen;\r\n" + 
-				   		"} \r\n" + 
-				   		".check{\r\n" + 
-				   		"padding:12px;\r\n" + 
-				   		"margin:5px;\r\n" + 
-				   		"font-size:22px;\r\n" + 
-				   		"border-radius:50%;\r\n" + 
-				   		"background-color:mediumseagreen;\r\n" + 
-				   		"box-shadow:0px 3px 6px rgba(0,0,0,0.3);\r\n" + 
-				   		"color:white;\r\n" + 
-				   		"}\r\n" + 
-				   		".heading{\r\n"+
-				   		"font-size:20px;\r\n" +
-				   		"color:slateblue;\r\n" +
-				   		"} \r\n"+
-				   		
-				   		"  </style>\r\n" + 
-				   		"  </head>\r\n" + 
-				   		"  <body>\r\n" + 
-				   		"  <div class=\"jumbotron text-center book-form\">\r\n" + 
-				   		"          <h2 class=\"success\"><span class=\"check\"><i class=\"fas fa-check\"></i></span> Successfully Booked</h2>\r\n" + 
-				   		"  <br>\r\n" + 
-				   		" <div class=\"col-xl-6 text-left\">\r\n" + 
-				   		" <h5 class=\"heading\">Transaction Id: "+id+"</h5>\r\n" + 
-				   		"<h5 class=\"heading\">"+(movierepo.findById(mid).orElse(null)).getMovie_name()+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+(theatresrepo.findById(tid).orElse(null)).getTname()+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+date+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+time+"</h5>\r\n" + 
-				   		" \r\n" + 
-				   		"  <h5 class=\"heading\">"+seq+"</h5>\r\n" + 
-				   		"  \r\n" + 
-				   		"  <h5 class=\"heading\">"+amount+"</h5>\r\n" + 
-				   		"	</div>\r\n" + 
-				   		"	</div>\r\n" + 
-				   		"  </body>\r\n" + 
-				   		"  </html>", "text/html");
-
-			   Multipart multipart = new MimeMultipart();
-			   multipart.addBodyPart(messageBodyPart);
-			   MimeBodyPart attachPart = new MimeBodyPart();
-//			   DataSource fds = new FileDataSource("E:\\Spring Boot\\MyTickets\\src\\main\\resources\\static\\images\\"+(movierepo.findById(mid).orElse(null)).getImg());
-//			   messageBodyPart.setDataHandler(new DataHandler(fds));
-//			   messageBodyPart.setHeader("Content-ID", "<image>");
-			   attachPart.attachFile("E:\\Spring Boot\\MyTickets\\src\\main\\resources\\static\\images\\"+(movierepo.findById(mid).orElse(null)).getImg());
-			   multipart.addBodyPart(attachPart);
-			   msg.setContent(multipart);
-			   Transport.send(msg);  
 			return mv;
 		}
 		else {

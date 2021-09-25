@@ -34,7 +34,7 @@
        
         <div class="mt-12 flex flex-col items-center">
           <h1 class="text-2xl xl:text-3xl font-extrabold">
-            Register for MyTickets
+            Register
           </h1>
           <c:forEach items="${messages}" var="temp">
           	<h3 style="color:orange">${temp}</h3>
@@ -88,10 +88,14 @@
                   <path d="M20 8v6M23 11h-6" />
                 </svg>
                 <span class="ml-3">
-                  Register
+                  Submit
                 </span>
               </button>
               </form>
+              <center>
+              <br>
+              <b>Already have an account? <a href="/login" style="color:slateblue;text-decoration:underline">Login</a> now!</b>
+              </center>
             </div>
           </div>
         </div>

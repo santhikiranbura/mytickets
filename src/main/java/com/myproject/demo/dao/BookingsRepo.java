@@ -14,4 +14,9 @@ public interface BookingsRepo extends CrudRepository<Bookings,Integer>{
 	
 	@Query("from Bookings where email=?1")
 	List<Bookings> findAllByEmail(String email);
+	
+	@Query("from Bookings where tid=?1 and date=?2 and time=?3")
+	List<Bookings> findShowTrans(int tid,String date,String time);
+	
+	
 }

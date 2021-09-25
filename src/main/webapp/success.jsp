@@ -12,6 +12,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/1a63ab4674.js" crossorigin="anonymous"></script>
   <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+            <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
   <style>
   ::-webkit-scrollbar {
       width: 10px;
@@ -28,31 +33,11 @@
   body {
     background: #fbfbfd;
 }
-  .book-form{
-  margin-left:auto;
-  margin-right:auto;
-  width:50%;
-  margin-top:2%;
-  padding-top:20px;
-  background-color:white;
-  box-shadow:0px 3px 8px rgba(0,0,0,0.5);
-  }
-  .proceed{
-  width:100%;
-  margin:5px;
-  padding:5px;
-  color:white;
-  background-color:slateblue;
-  }
-  @media(max-width:768px){
-  .book-form{
-  width:90%;
-  }
-  }
+  .
 
 .success{
-text-align:left;
 color:mediumseagreen;
+text-align:center;
 } 
 .check{
 padding:12px;
@@ -62,44 +47,39 @@ border-radius:50%;
 background-color:mediumseagreen;
 box-shadow:0px 3px 6px rgba(0,0,0,0.3);
 color:white;
- animation: example 2s infinite;
 }
-@keyframes example {
-  from {border-radius: 0%;
-  background-color:white;
-  color:mediumseagreen;
-  }
-  to {border-radius:50%;
-  background-color:mediumseagreen;
-  color:white;
-  }
-}
+
   </style>
   </head>
   <body>
-  <div class="jumbotron text-center book-form">
-          <h2 class="success"><span class="check"><i class="fas fa-check"></i></span> Successfully Booked</h2>
-  <br>
- <div class="row">
- <div class="col-xl-5">
- <img src="/images/${image}" class="img-reponsive" style="width:200px;height:300px">
- </div>
- <div class="col-xl-6 text-left">
- <h5 class="heading">Transaction Id: ${b.trans_id}</h5>
-<h5 class="heading">${movie_name}</h5>
-  
-  <h5 class="heading">${tname}</h5>
-  
-  <h5 class="heading">${b.date}</h5>
-  
-  <h5 class="heading">${b.time}</h5>
- 
-  <h5 class="heading">Seat nos : ${seq}</h5>
-  
-  <h5 class="heading">Rs ${b.amount}</h5>
-  <h5 class="heading">${b.email}</h5>
-	</div>
-	</div>
-	</div>
+  <section class=" body-font overflow-hidden">
+  <div class="container px-5 py-12 mx-auto">
+  <center>
+    <h2 class="success"><span class="check"><i class="fas fa-check"></i></span> Successfully Booked</h2><br><br>
+  </center>
+    <div class="lg:w-4/5 mx-auto flex flex-wrap ">
+      <img alt="ecommerce" class="mx-auto h-72 w-54  rounded" src="/images/${image}">
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">${tname}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">${movie_name}</h1>
+        <div class="flex mb-4">
+          <span class="flex items-center">
+            <span class="text-indigo-600 ml-3">${b.date}</span>
+          </span>
+          <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s text-indigo-500">
+            ${b.time}
+          </span>
+        </div>
+        <p class="leading-relaxed font-bold">${seq}</p>
+        <br>	
+        <div class="flex">
+          <span class="title-font font-medium text-2xl text-gray-900">Rs. ${b.amount}.00</span>
+        </div>
+        <p class="text-indigo-500 mt-4">${b.trans_id}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
   </body>
   </html>

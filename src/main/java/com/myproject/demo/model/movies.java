@@ -1,12 +1,15 @@
 package com.myproject.demo.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class movies {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int movie_id;
 	private String movie_name;
 	private String img;

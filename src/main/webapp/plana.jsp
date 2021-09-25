@@ -12,18 +12,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/1a63ab4674.js" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+            <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
     <style>
     ::-webkit-scrollbar {
-      width: 10px;
+      width: 5px;
     }
     ::-webkit-scrollbar-track {
       box-shadow: inset 0 0 5px white;
     }
     ::-webkit-scrollbar-thumb {
-      background-color:slateblue;
+      background-color:#6366F1;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background-color:slateblue;
+        background-color:#6366F1;
     }
       body {
           background: #fbfbfd;
@@ -34,27 +39,28 @@
         padding:5px;
         margin:5px;
         color:white;
-        background-color:slateblue;
+        background-color:#6366F1;
       }
       .ticket:hover,.ticket:active,.ticket:focus{
         color:white;
-        background-color:slateblue;
+        background-color:#6366F1;
       }
       footer{
         left:0;
         bottom:0;
         position:fixed;
+        z-index:2;
         height:0px;
         transition:0.5s;
         width:100%;
-        background-color:slateblue;
+        background-color:#6366F1;
       }
       header{
         left:0;
         top:0;
         position:fixed;
         width:100%;
-        background-color:slateblue;
+        background-color:#6366F1;
         height:50px;
       }
       .budget{
@@ -69,16 +75,8 @@
         margin-top:5px;
         margin-bottom:5px;
         height:40px;
-        float:left;
       }
-      .rupee{
-        font-size:25px;
-        color:white;
-        margin-left:100px;
-        margin-top:5px;
-        margin-bottom:5px;
-        float:left;
-      }
+      
       .book{
         height:40px;
         margin-top:5px;
@@ -89,6 +87,11 @@
       }
       .ticket_screen{
         margin-top:60px;
+        margin-left:auto;
+        overflow-y:scroll;
+        margin-right:auto;
+        width:1000px;
+        height:500px;
       }
       .heading3{
         color:white;
@@ -107,16 +110,28 @@
          <header class="jumbotron-fluid text-left">
 <h5 class="heading3">Booking for ${bookingdate}, ${time}</h5>
       </header>
-<div class="jumbotron-fluid text-center ticket_screen" id="screenid">
+      <div class="ticket_screen"> 
+      
+<div class="jumbotron-fluid text-center " id="screenid">
 </div>
 <br>
 <br>
   <div class="jumbotron text-center theatre_screen">
     Screen
     </div>
-<footer id="footer" class="jumbotron-fluid text-center">
-<span class="rupee">Rs</span><input id="budget" type="number" class="budget" value=0 readonly>
-<button type="button" class="btn btn-light book" onclick="Bookticket()">Book</button>
+    </div>
+<footer id="footer" class=" text-center">
+<div class="mx-auto">
+<table  class="mx-auto">
+<tr>
+<td>
+<input id="budget" type="number" class="budget" value=0 hidden>
+</td>
+<td>
+ <button type="button" id="paybtn" class="hidden flex mt-2 text-indigo-500 bg-white  border-0 py-2 px-6 focus:outline-none rounded" onclick="Bookticket()"></button>
+</td>
+</tr></table>
+</div>
 </footer>
 </div>
 <script type="text/javascript">
@@ -175,10 +190,11 @@
             }
             else if($(this).hasClass('silver')){
               document.getElementById('budget').value=parseInt(document.getElementById('budget').value)-100;
-
             }
-            $(this).css("background-color", "slateblue");
+            document.getElementById('paybtn').innerHTML="Pay Rs."+document.getElementById('budget').value;
+            $(this).css("background-color", "#6366F1");
           arr.splice(arr.indexOf(String(this.id)),1);
+          document.getElementById('paybtn').style.display="block";
           }
           else{
             if(arr.length<6){
@@ -187,10 +203,11 @@
                       }
                       else if($(this).hasClass('silver')){
                         document.getElementById('budget').value=parseInt(document.getElementById('budget').value)+100;
-
                       }
+                      document.getElementById('paybtn').innerHTML="Pay Rs."+document.getElementById('budget').value;
                       arr.push(String(this.id));
-                      $(this).css("background-color", "mediumseagreen");
+                      $(this).css("background-color", "#34D399");
+                      document.getElementById('paybtn').style.display="none";
                     }
                 else{
                   alert("At a time 6 tickets can be booked");
@@ -198,9 +215,11 @@
               }
               if(parseInt(document.getElementById('budget').value)!=0){
                   document.getElementById('footer').style.height="60px";
+                  document.getElementById('paybtn').style.display="block";
                 }
                 else{
                     document.getElementById('footer').style.height="0px";
+                    document.getElementById('paybtn').style.display="none";
                 }
     });
   });

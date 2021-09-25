@@ -12,6 +12,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/1a63ab4674.js" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+          <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+              <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
     <style>
     ::-webkit-scrollbar {
       width: 10px;
@@ -39,10 +44,8 @@
     }
     .icon{
       font-size:35px;
-
     }
     .nav-btn{
-      font-family: 'Aldrich';
       border-radius: 0px;
       border: none;
       margin:0px;
@@ -52,16 +55,13 @@
       background-color: white;
     }
     .nav-btn:hover,.nav-btn:focus,.nav-btn:active{
-      background-color:slateblue;
-      outline: 1px slateblue;
+      background-color:#6366F1;
+      outline: 1px #6366F1;
       color:white;
-    }
-    body {
-        background: slateblue;
     }
 label{
   margin-left:10px;
-  color:slateblue;
+  color:#6366F1;
 }
     .user-info{
       margin-left: auto;
@@ -101,22 +101,22 @@ label{
 <body>
 <table class="header">
       <tr>
-        <th>
+        <td style="vertical-align:top">
           <button type="button" class="nav-btn " id="b1" name="button" onclick="change('b1')" ><i class="fas fa-user-circle icon"> </i> Account</button>
-        </th>
-        <th>
+        </td>
+        <td>
     <button type="button" class="nav-btn" name="button" id="b2" onclick="change('b2')" ><i class="fas fa-ticket-alt icon"> </i> Bookings</button>
-        </th>
+        </td>
       </tr>
     </table>
     <script>
     change("b1");
     function change(x){
       if(x=="b1"){
-        document.getElementById('b1').style.background="slateblue";
-        document.getElementById('b1').style.color="white";
-        document.getElementById('b2').style.background="white";
-        document.getElementById('b2').style.color="slateblue";
+          document.getElementById('b1').style.background="white";
+          document.getElementById('b1').style.color="#6366F1";
+          document.getElementById('b2').style.background="#6366F1";
+          document.getElementById('b2').style.color="white";
         var xhttp = new XMLHttpRequest();
 		 
 	    xhttp.onreadystatechange = function() {
@@ -129,11 +129,11 @@ label{
 	    xhttp.send();
       }
       else{
-          
-        document.getElementById('b1').style.background="white";
-        document.getElementById('b1').style.color="slateblue";
-        document.getElementById('b2').style.background="slateblue";
-        document.getElementById('b2').style.color="white";
+          document.getElementById('b1').style.background="#6366F1";
+          document.getElementById('b1').style.color="white";
+          document.getElementById('b2').style.background="white";
+          document.getElementById('b2').style.color="#6366F1";
+
         var xhttp = new XMLHttpRequest();
 		 
 	    xhttp.onreadystatechange = function() {

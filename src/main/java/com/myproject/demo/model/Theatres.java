@@ -1,12 +1,15 @@
 package com.myproject.demo.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Theatres {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int tid;
 	private String tname;
 	private int seats;

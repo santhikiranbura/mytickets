@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <div class="user-info jumbotron ">
+    <div class="user-info jumbotron shadow-xl">
         <form action="/updateprofile" class="form-group" method="post">
           <label for="full_name"><b>Name</b></label>
           <input type="text" class="form-control" name="full_name" value="${user.full_name}">

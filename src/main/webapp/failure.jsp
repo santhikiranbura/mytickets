@@ -13,6 +13,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/1a63ab4674.js" crossorigin="anonymous"></script>
   <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+            <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
   <style>
   .book-form{
   margin-left:auto;
@@ -20,7 +25,6 @@
   width:50%;
   margin-top:2%;
   background-color:white;
-  box-shadow:0px 3px 8px rgba(0,0,0,0.5);
   }
   @media(max-width:768px){
   .book-form{
@@ -55,7 +59,7 @@ color:white;
   </style>
 </head>
 <body>
-<div class="jumbotron text-left book-form">
+<div class="jumbotron text-left book-form shadow-xl">
 <h2 class="failure"><span class="check"><i class="fas fa-times"></i></span>Already Booked</h2>
 <br>
 <br>

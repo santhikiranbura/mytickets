@@ -1,22 +1,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div class="container" style="margin-left:15%;">
-<div class="row" >
-<c:forEach items="${movie_list}" var="temp">
-  <div  class="col-xl-3 col-md-4 col-sm-4 col-8 movie">
-    <a href="javascript:void(0)" onclick="gotomovie(${temp.movie_id})" class="movie-link">
-		<div class="img-responsive">
-      <img src="/images/${temp.img}" class="movie-img">
-      	<br>
-      	<h4 class="heading" >${temp.movie_name}</h4>
-    	</div>
-  </a>
+<section   class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-wrap -m-4">
+    <c:forEach items="${movie_list}" var="temp">
+      <div class="xl:w-1/4 md:w-1/2 p-4 ">
+        <div class="bg-white p-6 rounded-lg cursor-pointer shadow-md duration-500 hover:shadow-2xl"  onclick="gotomovie(${temp.movie_id})" >
+          <img class="h-84 rounded w-full object-cover object-center mb-6" src="/images/${temp.img }" alt="content">
+          <h2 class="text-md text-gray-900 font-medium title-font mb-4">${temp.movie_name}</h2>
+        </div>
+      </div>
+      </c:forEach>
+    </div>
   </div>
-  </c:forEach>
-  
-</div>
-</div>
+</section>
 <c:if test = "${movie_list.size() == 0 }">
-<div class="jumbotron text-center" style="background-color:slateblue;width:50%;margin:auto;">
-<h1 class="heading">No Movies Available</h1>
+<div class="jumbotron text-center font-bold w-1/2 mx-auto" >
+<h1>No Movies Available !!</h1>
 </div>
 </c:if>

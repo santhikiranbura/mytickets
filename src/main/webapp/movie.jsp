@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title></title>
+  <title>${temp.movie_name}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -13,6 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/1a63ab4674.js" crossorigin="anonymous"></script>
   <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/home.css">
   <style>
     th{
@@ -44,8 +45,7 @@
       color:white;
     }
     .time_btn{
-      width:150px;
-      margin:10px;
+      margin:5px;
       padding:10px;
     }
     .heading2{
@@ -53,8 +53,6 @@
     }
     .movie-theater{
       border-radius:12px;
-      box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.3);
-      background-color:white;
       padding:10px;
       margin-top:20px;
       margin-left:auto;
@@ -66,21 +64,7 @@
 }
 
 
-.rcontainer {
-  background-color:slateblue;
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  height: 50vh;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  padding: 0 20px;
-  width:50%;
-  border-radius:8px;
-  margin:auto;
-}
+
 
 .rating {
   display: -webkit-box;
@@ -148,17 +132,7 @@
   z-index: 1;
 }
 
-.emoji-wrapper:before {
-  top: 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(white), color-stop(35%, white), to(rgba(255, 255, 255, 0)));
-  background: linear-gradient(to bottom, white 0%, white 35%, rgba(255, 255, 255, 0) 100%);
-}
 
-.emoji-wrapper:after {
-  bottom: 0;
-  background: -webkit-gradient(linear, left bottom, left top, from(white), color-stop(35%, white), to(rgba(255, 255, 255, 0)));
-  background: linear-gradient(to top, white 0%, white 35%, rgba(255, 255, 255, 0) 100%);
-}
 
 .emoji {
   display: -webkit-box;
@@ -204,22 +178,7 @@
           transform: translateY(-500px);
 }
 
-.feedback {
-  max-width: 360px;
-  background-color: #fff;
-  width: 100%;
-  padding: 30px;
-  border-radius: 8px;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  flex-wrap: wrap;
-  -webkit-box-align: center;
-          align-items: center;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-}
+
 .comments{
   border:1px solid slateblue;
   border-radius:8px;
@@ -237,48 +196,40 @@
 }
   </style>
 </head>
-<body onload="fun();">
-<nav class="navbar navbar-expand-md  navbar-dark">
-  <a class="navbar-brand" href="/"><h2>My Tickets</h2></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-
-    <div class="dropdown">
-<input type="text" placeholder="Search.." class="form-control" id="myInput" style="width:53vw;" autocomplete="off" onkeyup="filterFunction()">
-    <div id="myDropdown" class="dropdown-content">
-     <c:forEach items="${movielist}" var="temp">
-    <a href="javascript:void(0)" onclick="gotomovie(${temp.movie_id})">${temp.movie_name}</a>
-    </c:forEach>
+<body class="bg-gray-100" onload="fun();">
+<nav class="bg-gray-800">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="relative flex items-center justify-between h-20">
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      </div>
+ <div class="flex-1 flex  sm:items-stretch sm:justify-start">
+        <div class="flex-shrink-0 flex text-white font-extrabold items-center cursor-pointer"  onclick="window.location.href='/'">
+    			<img src="/images/MyTickets.png" class="w-8 h-8 rounded-full mr-2" >MyTickets
+        </div>
+      </div>
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <div class="ml-3 relative">
+         <c:if test = "${pageContext['request'].userPrincipal.principal.enabled != true}">
+        <a style="margin-top:5px" class="bg-gray-900  text-white px-3 py-2 rounded-md text-sm font-medium" href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
+      </c:if>
+      <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
+         <div class=" dropdown dropleft">
+      <a class="nav-link text-white  dropdown-toggle" href="javascript:void(0)" id="navbardrop3" data-toggle="dropdown">
+        <i class="fas fa-user"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-left shadow-2xl  bg-gray-700 p-2">
+        <a class="dropdown-item" href="/Account">Account</a>
+        <hr class="border-white my-2">
+        <a class="dropdown-item  text-red-500 " href="/logout">Logout</a>
+      </div>
+    </div>
+      </c:if>
+      
+        </div>
+      </div>
+    </div>
   </div>
-  </div>
-  <script>
-
-  function filterFunction() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    div = document.getElementById("myDropdown");
-    a = div.getElementsByTagName("a");
-    for (i = 0; i < a.length; i++) {
-    if(filter.length>0){
-    document.getElementById("myDropdown").style.display="block";
-    }
-    else{
-    document.getElementById("myDropdown").style.display="none";
-    
-    }
-      txtValue = a[i].textContent || a[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        a[i].style.display = "";
-      } else {
-        a[i].style.display = "none";
-      }
-    }
-  }
-  </script>
+</nav>
   <form id="movie_form" action="movie" method="POST">
 <input name="movie_id" id="movie_id" style="display:none"/>
 </form>
@@ -288,163 +239,34 @@ function gotomovie(id){
 	document.getElementById('movie_form').submit();
 }
 </script>
-  
-    <li class="nav-item dropdown">
-      <a class="nav-link text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
-        <i class="fas fa-map-marker-alt"></i> <span id="navbardrop2">${location}</span>
-      </a>
-      <div class="dropdown-menu ">
-     <c:forEach items="${alllocations}" var="temp">
-        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbyloc('${temp}')">${temp}</a>
-        </c:forEach>
-      </div>
-    </li>
-<c:if test = "${pageContext['request'].userPrincipal.principal.enabled != true}">
-    <li class="nav-item">
-        <a class="nav-link text-white " href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
-      </li>
-      </c:if>
-      <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
-         <li class="nav-item dropdown">
-      <a class="nav-link text-white dropdown-toggle" href="javascript:void(0)" id="navbardrop2" data-toggle="dropdown">
-        <i class="fas fa-user"></i> ${username}
-      </a>
-      <div class="dropdown-menu ">
-        <a class="dropdown-item" href="/Account">Account</a>
-        <a class="dropdown-item" href="/logout">Logout</a>
-      </div>
-    </li>
-      </c:if>
-    </ul>
-  </div>
-</nav>
-<br>
-<br>
-<br>
-<br>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xl-5 movie-content">
-      <div class="table-responsive">
-        <table class="table">
-          <tr>
-            <th>Movie Name</th>
-            <td>${movie.movie_name}</td>
-          </tr>
-          <tr>
-            <th>Genre</th>
-            <td>${movie_info.genre}</td>
-          </tr>
-          <tr>
-            <th>Language</th>
-            <td>${movie_info.lan }</td>
-          </tr>
-          <tr>
-            <th>Release Date</th>
-            <td>${movie_info.rd}</td>
-          </tr>
-          <tr>
-            <th>Movie Length</th>
-            <td>${movie_info.ml }</td>
-          </tr>
-          <tr>
-            <th>Story</th>
-            <td>${movie_info.story }</td>
-          </tr>
-          <tr>
-            <th>Google Rating</th>
-            <td>${movie_info.per }</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="col-xl-6">
-      <iframe class="movie-trailer" src="${movie_info.link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
 
-  </div>
-  </div>
-<br>
-<br>
-<input type="number" id="mmovie_id" value="${movie_info.movie_id}"  hidden/>
-<div class="jumbotron-fluid text-center">
-<div class="dates">
- <c:forEach items="${dates}" var="date">
-  <button type="button" class="btn  date_btn" onclick="filter_theatres('${date}')" id="${date}">${date}</button>
-  </c:forEach>
-  </div>
-  <script>
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container px-1 py-4 mx-auto">
+    <div class=" mx-auto flex flex-wrap">
+       <iframe  class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"  src="${movie_info.link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">${movie_info.genre}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">${movie.movie_name}</h1>
+        <div class="flex mb-4">
+          <span class="flex items-center">
+            <span class="text-gray-600 ml-3"> ${movie_info.ml}</span>
+          </span>
+          <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+            ${movie_info.lan}
+          </span>
+        </div>
+        <p class="leading-relaxed"> ${movie_info.story}</p>
+        <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+          Released on  ${movie_info.rd}<br>
+           ${movie_info.per} liked this film.
+        </div>
+<div class="align-center -mt-5" >My Tickets Rating is ${avgrating}. 
+ <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">Add/Change your rating below</c:if></div>
+        <div class="flex">
+         <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}"> 
+<div class="w-full ">
 
-  var loc_title=document.getElementById('navbardrop2');
-  var dates =document.getElementsByClassName("dates")[0];
-  var buttons=dates.getElementsByTagName("button");
-  mid=document.getElementById('mmovie_id').value;
-	  function filter_theatres(date){
-		  
-		  document.getElementById(date).style.background="slateblue";
-		  document.getElementById(date).style.color="white";
-		  for(itr=0;itr<buttons.length;itr++){
-			  if(buttons[itr].innerHTML!=date){
-				  document.getElementById(buttons[itr].innerHTML).style.background="white";
-				  document.getElementById(buttons[itr].innerHTML).style.color="slateblue";
-				  }
-			  }
-		  loc=String(loc_title.innerHTML);
-		  
-		  
-		  var xhttp = new XMLHttpRequest();
-		 
-		    xhttp.onreadystatechange = function() {
-		    	
-		      if (this.readyState == 4 && this.status == 200) {
-		    	  document.getElementById('matter').innerHTML=this.responseText;
-		      }
-		    };
-		    xhttp.open("GET", "filter_theatres?date="+date+"&location="+loc+"&movie_id="+mid,true);
-		    xhttp.send();
-	  }
-
-	  function filterbyloc(loc){
-
-		  loc_title.innerHTML=loc;
-		    filter_theatres(String(buttons[0].innerHTML));
-		 }
-  	  filterbyloc(String(loc_title.innerHTML));  
-  	function rate_movie(rating){
-  	  	if(rating!=0){
-	    	var xhttp = new XMLHttpRequest();
-			 
-		    xhttp.onreadystatechange = function() {
-		    	
-		      if (this.readyState == 4 && this.status == 200) {
-			      alert(this.responseText);
-		      }
-		    };
-		    xhttp.open("GET", "ratemovie?rating="+rating+"&movie_id="+mid,true);
-		    xhttp.send();
-  	  	}
-  }
-   
-function fun(){
-
-	  document.getElementById("rating-${user_rating}").click();
-}
-  </script>
-  <div id="matter">
-  </div>
-  
-</div>
-<br>
-<br>
-
-<hr style="color:black">
-<c:if test = "${avgrating !=0}">
-<h1 class="heading" style="color:slateblue;font-size:40px">My Tickets Rating : ${avgrating}</h1>
-</c:if>
-<c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
-<div class="rcontainer">
   <div class="feedback">
-  <h3>Your Rating</h3>
     <div class="rating">
       <input type="radio" name="rating" id="rating-5" onclick="rate_movie(5);">
       <label for="rating-5"></label>
@@ -544,49 +366,140 @@ function fun(){
         </div>
       </div>
     </div>
+    
   </div>
 </div>
 </c:if>
-<c:if test = "${pageContext['request'].userPrincipal.principal.enabled != true}">
-<div class="jumbotron-fluid text-center"><h6>Login to submit your Rating</h6></div>
-</c:if>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<br>
+<br>
+<div class="px-1 container">
+<a class="appearance-none block w-40 bg-gray-200 hover:text-gray-900 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
+        <i class="fas fa-map-marker-alt"></i> <span id="navbardrop2">${location}</span>
+      </a>
+      <div class="dropdown-menu bg-gray-900  p-2">
+     <c:forEach items="${alllocations}" var="temp">
+        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbyloc('${temp}')">${temp}</a>
+        </c:forEach>
+      </div>
+</div>
+
+<input type="number" id="mmovie_id" value="${movie_info.movie_id}"  hidden/>
+<div class="jumbotron-fluid text-center">
+<div class="dates">
+ <c:forEach items="${dates}" var="date">
+  <button type="button" class="btn  date_btn" onclick="filter_theatres('${date}')" id="${date}">${date}</button>
+  </c:forEach>
+  </div>
+  <script>
+
+  var loc_title=document.getElementById('navbardrop2');
+  var dates =document.getElementsByClassName("dates")[0];
+  var buttons=dates.getElementsByTagName("button");
+  mid=document.getElementById('mmovie_id').value;
+	  function filter_theatres(date){
+		  
+		  document.getElementById(date).style.background="slateblue";
+		  document.getElementById(date).style.color="white";
+		  for(itr=0;itr<buttons.length;itr++){
+			  if(buttons[itr].innerHTML!=date){
+				  document.getElementById(buttons[itr].innerHTML).style.background="white";
+				  document.getElementById(buttons[itr].innerHTML).style.color="slateblue";
+				  }
+			  }
+		  loc=String(loc_title.innerHTML);
+		  
+		  
+		  var xhttp = new XMLHttpRequest();
+		 
+		    xhttp.onreadystatechange = function() {
+		    	
+		      if (this.readyState == 4 && this.status == 200) {
+		    	  document.getElementById('matter').innerHTML=this.responseText;
+		      }
+		    };
+		    xhttp.open("GET", "filter_theatres?date="+date+"&location="+loc+"&movie_id="+mid,true);
+		    xhttp.send();
+	  }
+
+	  function filterbyloc(loc){
+
+		  loc_title.innerHTML=loc;
+		    filter_theatres(String(buttons[0].innerHTML));
+		 }
+  	  filterbyloc(String(loc_title.innerHTML));  
+  	function rate_movie(rating){
+  	  	if(rating!=0){
+	    	var xhttp = new XMLHttpRequest();
+			 
+		    xhttp.onreadystatechange = function() {
+		    	
+		      if (this.readyState == 4 && this.status == 200) {
+			      alert(this.responseText);
+		      }
+		    };
+		    xhttp.open("GET", "ratemovie?rating="+rating+"&movie_id="+mid,true);
+		    xhttp.send();
+  	  	}
+  }
+   
+function fun(){
+
+	  document.getElementById("rating-${user_rating}").click();
+}
+  </script>
+  <div id="matter">
+  </div>
+  
+</div>
 <br>
 <br>
 
+<hr style="color:black">
 
-<footer class="new_footer_area bg_color">
-            <div class="new_footer_top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Contact us</h3>
-                                <div class="f_social_icon">
-                                    <a href="https://www.facebook.com/" target="_blank" class="fab fa-facebook"></a>
-                                    <a href="https://twitter.com/home?lang=en" target="_blank" class="fab fa-twitter"></a>
-                                    <a href="https://www.linkedin.com/feed/" target="_blank" class="fab fa-linkedin"></a>
-                                    <a href="https://www.youtube.com/" target="_blank" class="fab fa-youtube"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer_bg">
-                    <div class="footer_bg_one"></div>
-                    <div class="footer_bg_two"></div>
-                </div>
-            </div>
-            <div class="footer_bottom">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-12 col-sm-7">
-                            <p class="mb-0 f_400">  Copyright 2020 © MyTickets Pvt. Ltd. All Rights Reserved.
-    The content and images used on this site are copyright protected and copyrights vests with the respective owners. The usage of the content and images on this website is intended to promote the works and no endorsement of the artist shall be implied. Unauthorized use is prohibited and punishable by law.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+
+
+<br>
+<br>
+<footer class="text-gray-600 body-font">
+  <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+    <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+     <img src="/images/MyTickets.png" class="w-8 h-8 rounded-full mr-2" >
+      <span class="ml-3 text-xl">MyTickets</span>
+    </a>
+    <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+      <a class="text-gray-500">
+        <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+          <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+        </svg>
+      </a>
+      <a class="ml-3 text-gray-500">
+        <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+          <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+        </svg>
+      </a>
+      <a class="ml-3 text-gray-500">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+        </svg>
+      </a>
+      <a class="ml-3 text-gray-500">
+        <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+          <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+          <circle cx="4" cy="4" r="2" stroke="none"></circle>
+        </svg>
+      </a>
+    </span>
+  </div>
+</footer>
+
 </body>
 </html>
     

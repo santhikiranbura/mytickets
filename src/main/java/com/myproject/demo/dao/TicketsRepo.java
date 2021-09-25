@@ -11,4 +11,8 @@ public interface TicketsRepo extends CrudRepository<Tickets,Integer>{
 
 	@Query("select ticket from Tickets where trans_id=?1")
 	List<String> findTicketByTrans(String trans_id);
+	
+	@Query("select count(trans_id) from Tickets where trans_id=?1")
+	Integer CountTicketByTrans(String trans_id);
+	
 }

@@ -12,6 +12,9 @@ public interface Movie_TheatreRepo extends CrudRepository<Movie_Theatre,Integer>
 	@Query("select distinct movie_id from Movie_Theatre where tid=?1")
 	List<Integer> findMoviesByTid(Integer tid);
 	
+	@Query("from Movie_Theatre where tid=?1")
+	List<Movie_Theatre> findAllMoviesByTid(Integer tid);
+	
 	@Query("from Movie_Theatre where tid=?1 and movie_id=?2")
 	Movie_Theatre findMovieByTid(Integer tid,Integer movie_id);
 }
