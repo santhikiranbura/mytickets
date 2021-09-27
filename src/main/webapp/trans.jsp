@@ -47,4 +47,8 @@
     </div>
 </section>
 
-
+ <c:if test = "${bookings.size() == 0 }">
+<div  class="jumbotron text-center font-bold w-1/2 mx-auto" >
+<h1>No Bookings Made !!</h1>
+</div>
+</c:if>

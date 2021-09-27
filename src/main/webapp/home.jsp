@@ -216,7 +216,7 @@
       <script>
 
       function filterFunction() {
-        var input, filter, ul, li, a, i;
+        let input, filter, ul, li, a, i;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
         div = document.getElementById("myDropdown");
@@ -251,6 +251,7 @@
     	    xhttp.send();
           }
       function filterbyloc(loc){
+          
     	  loc_title.innerHTML=loc;
     	  var xhttp = new XMLHttpRequest();
   	    xhttp.onreadystatechange = function() {
@@ -263,7 +264,7 @@
         }
 
       function mobfilterFunction() {
-        var input, filter, ul, li, a, i;
+        let input, filter, ul, li, a, i;
         input = document.getElementById("mobmyInput");
         filter = input.value.toUpperCase();
         div = document.getElementById("mobmyDropdown");
@@ -298,6 +299,7 @@
     	    xhttp.send();
           }
       function mobfilterbyloc(loc){
+          document.getElementById('nomovies').style.display="none";
     	  mobloc_title.innerHTML=loc;
     	  var xhttp = new XMLHttpRequest();
   	    xhttp.onreadystatechange = function() {
@@ -308,6 +310,7 @@
   	    xhttp.open("GET", "filter?language="+String(moblan_title.innerHTML)+"&location="+loc,true);
   	    xhttp.send();
         }
+ 
       </script>
 <section class="text-gray-600 body-font ">
   <div class="container px-5 py-24 mx-auto">
@@ -349,7 +352,7 @@
     <c:forEach items="${movie}" var="temp">
       <div class="xl:w-1/4 md:w-1/2 p-4 ">
         <div class="bg-white p-6 rounded-lg cursor-pointer shadow-md duration-500 hover:shadow-2xl"  onclick="gotomovie(${temp.movie_id})" >
-          <img class="h-84 rounded w-full object-cover object-center mb-6" src="/images/${temp.img }" alt="content">
+          <img class="h-84 rounded w-full object-cover object-center mb-6" src="${temp.img }" alt="content">
           <h2 class="text-md text-gray-900 font-bold title-font mb-4">${temp.movie_name}</h2>
         </div>
       </div>
@@ -360,7 +363,7 @@
 </div>
 
  <c:if test = "${movie.size() == 0 }">
-<div class="jumbotron text-center font-bold w-1/2 mx-auto" >
+<div id="nomovies" class="jumbotron text-center font-bold w-1/2 mx-auto" >
 <h1>No Movies Available !!</h1>
 </div>
 </c:if>

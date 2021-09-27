@@ -188,12 +188,12 @@ function changeformstatus(){
 <br>
 <br>
 <section class="text-gray-600 body-font relative">
-  <div class="container px-5 py-24 mx-auto">
+  <div class="container px-5 py-12 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">${theatre.tname}</h1>
       <div>
       <input type="date" id="date" onchange="showstats()" class="appearance-none block mx-auto  bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
-		<div id="stats" >
+		<div id="stats" class="flex-wrap flex mt-4" >
 		
 		</div>
 		</div>
@@ -201,9 +201,6 @@ function changeformstatus(){
  </div>
 </section>
 
-
-<br>
-<br>
    <button type="button" onclick="showmodal('modal2')"  class="cursor-pointer float-right mr-6 mt-6 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
              <i class="fas fa-plus" style="margin-right:7px;margin-top:4.5px;font-size:12px"></i> Screen a New Movie
             </button> 
@@ -222,7 +219,7 @@ function changeformstatus(){
 	    <c:if test = "${movie.movie_id == movieinfo.movie_id }">
 	      <div class="p-4 lg:w-1/2 py-12 rounded">
 	        <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
-	          <img alt="team" class="flex-shrink-0 rounded-lg w-48 h-84 object-cover object-center sm:mb-0 mb-4" src="/images/${movieinfo.img}" >
+	          <img alt="team" class="flex-shrink-0 rounded-lg w-48 h-84 object-cover object-center sm:mb-0 mb-4" src="${movieinfo.img}" >
 	          <div class="flex-grow sm:pl-8">
 	          <input type="hidden" value="${movie.start_date}" class="start_date_text">
 	           <input type="hidden" value="${movie.end_date}" class="close_date_text">
@@ -263,31 +260,25 @@ function changeformstatus(){
 <br>
 <br><br><br>
 <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto flex flex-wrap">
+  <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap -m-4">
-    <c:forEach items="${theatres}" var="item">
-    <c:if test = "${item.tid != theatre.tid }">
-      <div class="p-4 lg:w-1/2 md:w-full ">
-        <div onclick="window.location.href='/theatre?location=${location}&tid=${item.tid}';" class="flex  rounded-lg bg-white p-8 sm:flex-row flex-col shadow-md cursor-pointer duration-500 hover:shadow-2xl">
-          <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-            ${item.tid}
+        <c:forEach items="${theatres}" var="item">
+        <c:if test = "${item.tid != theatre.tid }">
+      <div class="xl:w-1/3 md:w-1/2 p-4" >
+        <div class=" p-6 rounded-lg cursor-pointer shadow-md bg-white hover:shadow-2xl transition duration-500" onclick="window.location.href='/theatre?location=${location}&tid=${item.tid}';">
+          <div class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+             ${item.tid}
           </div>
-          <div class="flex-grow">
-            <h2 class="text-gray-900 text-lg title-font font-medium mb-3">${item.tname}</h2>
-            <p class="leading-relaxed text-base">${item.seats} seats</p>
-            <a class="mt-3 text-indigo-500 inline-flex items-center">Manage
-              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-              </svg>
-            </a>
-          </div>
+          <h2 class="text-lg text-gray-900 font-medium title-font mb-2">${item.tname}</h2>
+          <p class="leading-relaxed text-base">${item.seats} seats</p>
         </div>
       </div>
       </c:if>
       </c:forEach>
     </div>
-  </div>
+   </div>
 </section>
+
 <br><br><br><br><br><br>
 <script>
 var sds = document.getElementsByClassName("start_date_text");
@@ -366,33 +357,33 @@ function showstats(){
 			}
 		      document.getElementById("stats").innerHTML="";
 			for(let k=0;k<stats.length;k++){
-		      var htmlOutput="<div class='relative lg:w-1/2 mx-auto bg-white p-5 w-full shadow-xl my-2'>"+
+		      var htmlOutput="<div class='relative lg:w-1/5 bg-white p-5 m-4 w-full shadow-2xl'>"+
 		      "<div class='flex mb-2 items-center justify-between'>"+
 		      "<div>"+
-		      "<span class='text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-black '>"+
+		      "<span class=' font-bold inline-block py-1 px-2 uppercase rounded-full text-indigo-500 '>"+
 		      stats[k][0]+
 		      "</span>"+
 		      "</div>"+
 		      "<div class='text-right'>"+
-		      "<span class='text-sm font-semibold inline-block'>"+stats[k][3]+"% ("+stats[k][2]+"/${theatre.seats}"+")"+
+		      "<span class='text-sm font-semibold inline-block'>"+stats[k][3]+"% "+
 		        "</span>"+
 		        "</div>"+
 		        "</div>";
 		        if(stats[k][3]==0){
-				htmlOutput+="<div class='overflow-hidden h-4 mb-4 text-xs flex rounded bg-pink-200'>"+
+				htmlOutput+="<div class='overflow-hidden h-2 mb-4 text-xs flex rounded bg-pink-200'>"+
 		        "<div style='width:"+stats[k][3]+"%' class='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500'></div>"+
 		        "</div>";
 			    }else if (stats[k][3]>0 && stats[k][3]<50){
-			    	htmlOutput+="<div class='overflow-hidden h-4 mb-4 text-xs flex rounded bg-yellow-200'>"+
+			    	htmlOutput+="<div class='overflow-hidden h-2 mb-4 text-xs flex rounded bg-yellow-200'>"+
 			        "<div style='width:"+stats[k][3]+"%' class='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500'></div>"+
 			        "</div>";
 				}else{
-					htmlOutput+="<div class='overflow-hidden h-4 mb-4 text-xs flex rounded bg-green-200'>"+
+					htmlOutput+="<div class='overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-200'>"+
 			        "<div style='width:"+stats[k][3]+"%' class='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500'></div>"+
 			        "</div>";
 				}
 		        
-		        htmlOutput+="<div class='text-xs font-bold text-left ml-2'>Rs. "+stats[k][1]+"</div>"+
+		        htmlOutput+="<div class='text-sm font-bold text-left ml-2'>Rs. "+stats[k][1]+"<span class='float-right'>"+"("+stats[k][2]+"/${theatre.seats}"+")"+"</span></div>"+
 		        "</div>";
 	    	  document.getElementById("stats").innerHTML+=htmlOutput;
 			}

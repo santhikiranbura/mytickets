@@ -25,7 +25,7 @@ import com.myproject.demo.dao.*;
 @Controller
 public class Admin {
 	
-	public static String uploadDirectory=System.getProperty("user.dir")+"/src/main/resources/static/images";
+//	public static String uploadDirectory=System.getProperty("user.dir")+"/src/main/resources/static/images";
 	@Autowired
 	admin_repo admin_repo;
 	
@@ -236,14 +236,15 @@ public class Admin {
 	public ModelAndView AddMovie(@RequestParam("movie_name") String movie_name,@RequestParam("genre") String genre,
 			@RequestParam("lan") String lan,@RequestParam("rd") String rd,@RequestParam("per") String per,
 			@RequestParam("link") String link,@RequestParam("story") String story,@RequestParam("ml") String ml,
-			@RequestParam("img") MultipartFile img) throws IOException {
+			@RequestParam("img") String img
+			) throws IOException {
 		if(isAdmin()) {
 
-			String original = img.getOriginalFilename();
-			String genericfilename = movie_name+"_"+lan+"."+original.substring(original.lastIndexOf('.')+1);
+//			String original = img.getOriginalFilename();
+//			String genericfilename = movie_name+"_"+lan+"."+original.substring(original.lastIndexOf('.')+1);
 			movies movie = new movies(); 
 			movie.setMovie_name(movie_name);
-			movie.setImg(genericfilename);
+			movie.setImg(img);
 			moviesRepo.save(movie);
 			
 			MovieInfo mi = new MovieInfo();
@@ -257,8 +258,8 @@ public class Admin {
 			mi.setStory(story);
 			movieinforepo.save(mi);
 			
-			Path filenamepath = Paths.get(uploadDirectory, genericfilename);
-			Files.write(filenamepath, img.getBytes());
+//			Path filenamepath = Paths.get(uploadDirectory, genericfilename);
+//			Files.write(filenamepath, img.getBytes());
 			return new ModelAndView("redirect:"+"/admin");
 		}
 		else {
@@ -287,13 +288,13 @@ public class Admin {
 	public ModelAndView EditMovie(@RequestParam("mid") int mid,@RequestParam("movie_name") String movie_name,@RequestParam("genre") String genre,
 			@RequestParam("lan") String lan,@RequestParam("rd") String rd,@RequestParam("per") String per,
 			@RequestParam("link") String link,@RequestParam("story") String story,@RequestParam("ml") String ml,
-			@RequestParam("img") MultipartFile img) throws IOException {
+			@RequestParam("img") String img) throws IOException {
 		if(isAdmin()) {
-			String original = img.getOriginalFilename();
-			String genericfilename = movie_name+"_"+lan+"."+original.substring(original.lastIndexOf('.')+1);
+//			String original = img.getOriginalFilename();
+//			String genericfilename = movie_name+"_"+lan+"."+original.substring(original.lastIndexOf('.')+1);
 			movies movie = moviesRepo.findById(mid).orElse(null);
 			movie.setMovie_name(movie_name);
-			movie.setImg(genericfilename);
+			movie.setImg(img);
 			moviesRepo.save(movie);
 			
 			MovieInfo mi = movieinforepo.findById(mid).orElse(null);
@@ -307,8 +308,8 @@ public class Admin {
 			mi.setStory(story);
 			movieinforepo.save(mi);
 			
-			Path filenamepath = Paths.get(uploadDirectory, genericfilename);
-			Files.write(filenamepath, img.getBytes());
+//			Path filenamepath = Paths.get(uploadDirectory, genericfilename);
+//			Files.write(filenamepath, img.getBytes());
 			return new ModelAndView("redirect:"+"/admin");
 		}
 		else {
