@@ -190,7 +190,7 @@ public class Admin {
 	public ModelAndView AddTheatre(@RequestParam("tname") String tname,@RequestParam("seats") int seats,@RequestParam("location") String loc) {
 		if(isAdmin()) {
 			Theatres theatre = new Theatres();
-			theatre.setSeating_plan("defaultseatingplan");
+			theatre.setSeating_plan("plana");
 			theatre.setTname(tname);
 			theatre.setSeats(seats);
 			theatresrepo.save(theatre);
@@ -239,7 +239,9 @@ public class Admin {
 			@RequestParam("img") String img
 			) throws IOException {
 		if(isAdmin()) {
-
+			String[] temp = link.split("=");
+			if(temp.length>1)
+				link = "https://www.youtube.com/embed/"+temp[1];
 //			String original = img.getOriginalFilename();
 //			String genericfilename = movie_name+"_"+lan+"."+original.substring(original.lastIndexOf('.')+1);
 			movies movie = new movies(); 

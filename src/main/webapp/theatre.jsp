@@ -193,7 +193,7 @@ function changeformstatus(){
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">${theatre.tname}</h1>
       <div>
       <input type="date" id="date" onchange="showstats()" class="appearance-none block mx-auto  bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
-		<div id="stats" class="flex-wrap flex mt-4" >
+		<div id="stats" class="  flex-wrap flex mt-4" >
 		
 		</div>
 		</div>
@@ -202,7 +202,7 @@ function changeformstatus(){
 </section>
 
    <button type="button" onclick="showmodal('modal2')"  class="cursor-pointer float-right mr-6 mt-6 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-             <i class="fas fa-plus" style="margin-right:7px;margin-top:4.5px;font-size:12px"></i> Screen a New Movie
+             <i class="fas fa-eye" style="margin-right:7px;margin-top:4.5px;font-size:12px"></i> Screen a New Movie
             </button> 
             <br>
             <br><br>
@@ -211,16 +211,20 @@ function changeformstatus(){
   </div>
   <br>
 
-<section class="text-gray-600 bg-white body-font">
+<section class="text-gray-600  body-font">
   <div class="container px-3 mx-auto">
     <div class="flex-wrap flex -m-4">
     <c:forEach var="movie"  items="${movies}" >
 	    <c:forEach  var="movieinfo" items="${moviesinfo}" >
 	    <c:if test = "${movie.movie_id == movieinfo.movie_id }">
 	      <div class="p-4 lg:w-1/2 py-12 rounded">
+	      	<div class="bg-white p-5 shadow-md">
 	        <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
 	          <img alt="team" class="flex-shrink-0 rounded-lg w-48 h-84 object-cover object-center sm:mb-0 mb-4" src="${movieinfo.img}" >
 	          <div class="flex-grow sm:pl-8">
+	         <button type="button" title="remove" onclick="unscreenmovie('${movie.id}','${theatre.tid}','${location}')" class="float-right cursor-pointer w-8 h-8  justify-center  rounded-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              <i class="fas fa-eye-slash"></i>
+            </button> 
 	          <input type="hidden" value="${movie.start_date}" class="start_date_text">
 	           <input type="hidden" value="${movie.end_date}" class="close_date_text">
 	          <form id="form${movie.id}">
@@ -243,11 +247,8 @@ function changeformstatus(){
               Update
             </button> 
             </form>
-            <button type="button" onclick="window.location.href='/unscreenmovie?id=${movie.id}&tid=${theatre.tid}&location=${location}'" class="float-right cursor-pointer  mr-6 mt-6 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-              Delete
-            </button> 
-          
 	          </div>
+	        </div>
 	        </div>
 	      </div>
 	      </c:if>
@@ -309,7 +310,11 @@ function dateFormat(x){
 	var list = x.split("-");
 	return list[2]+"-"+list[1]+"-"+list[0];
 }
-
+function unscreenmovie(mid,tid,location){
+	if(confirm("Do you really want to unscreen this movie?")){
+		window.location.href='/unscreenmovie?id='+mid+'&tid='+tid+'&location='+location;
+	}
+}
 function updatedates(id){
 	var x = $("#form"+id).serializeArray();
 	var values=[]
@@ -357,7 +362,7 @@ function showstats(){
 			}
 		      document.getElementById("stats").innerHTML="";
 			for(let k=0;k<stats.length;k++){
-		      var htmlOutput="<div class='relative lg:w-1/5 bg-white p-5 m-4 w-full shadow-2xl'>"+
+		      var htmlOutput="<div class='relative rounded-lg  lg:w-1/5 bg-white p-5 m-4 w-full shadow-2xl'>"+
 		      "<div class='flex mb-2 items-center justify-between'>"+
 		      "<div>"+
 		      "<span class=' font-bold inline-block py-1 px-2 uppercase rounded-full text-indigo-500 '>"+

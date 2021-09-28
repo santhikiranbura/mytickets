@@ -58,12 +58,12 @@ color:white;
 }
   </style>
 </head>
-<body>
+<body class="bg-gray-100">
 <div class="jumbotron text-left book-form shadow-xl">
-<h2 class="failure"><span class="check"><i class="fas fa-times"></i></span>Already Booked</h2>
+<h2 class="failure">Tickets already Booked</h2>
 <br>
 <br>
-<h5>Book Again</h5>
+<a href="/" class="text-blue-600">Book Again</a>
 
 </div>
 </body>

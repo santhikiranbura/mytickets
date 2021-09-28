@@ -344,6 +344,18 @@ public class HomeController {
 		mv.addObject("amount",amount);
 		return mv;
 	}
+	@RequestMapping(value="/success",method=RequestMethod.GET)
+	public ModelAndView TicketReceipt(@RequestParam("id") String id) {
+		ModelAndView mv= new ModelAndView("success.jsp");
+		Bookings b=bookingsrepo.findByTransId(id);
+		List<String> seq = ticketsrepo.findTicketByTrans(id);
+		mv.addObject("image",(movierepo.findById(b.getMid()).orElse(null)).getImg());
+		mv.addObject("movie_name",(movierepo.findById(b.getMid()).orElse(null)).getMovie_name());
+		mv.addObject("tname",(theatresrepo.findById(b.getTid()).orElse(null)).getTname());
+		mv.addObject("b",b);
+		mv.addObject("seq",seq);
+		return mv;
+	}
 	@RequestMapping(value="/success",method=RequestMethod.POST)
 	public ModelAndView confirmbooking(@RequestParam("email") String email,@RequestParam("amount") String amount,@RequestParam("date") String date,@RequestParam("tid") int tid,@RequestParam("mid") int mid,@RequestParam("time") String time,@RequestParam("seq") String seq) throws AddressException, MessagingException,IOException {
 		List<String> booked = findbookedtickets(mid,tid,date,time);

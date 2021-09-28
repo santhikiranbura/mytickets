@@ -18,5 +18,7 @@ public interface BookingsRepo extends CrudRepository<Bookings,Integer>{
 	@Query("from Bookings where tid=?1 and date=?2 and time=?3")
 	List<Bookings> findShowTrans(int tid,String date,String time);
 	
+	@Query("from Bookings where trans_id=?1")
+	Bookings findByTransId(String transid);
 	
 }

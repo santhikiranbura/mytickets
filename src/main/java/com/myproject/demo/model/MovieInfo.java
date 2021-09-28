@@ -1,5 +1,6 @@
 package com.myproject.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -12,8 +13,13 @@ public class MovieInfo {
 	private String lan;
 	private String rd;
 	private String ml;
+	
+	@Column(length = 1000)
 	private String story;
+	
 	private String per;
+	
+	@Column(length = 1000)
 	private String link;
 	public int getMovie_id() {
 		return movie_id;

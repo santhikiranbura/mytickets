@@ -98,55 +98,35 @@ label{
       </style>
 
 </head>
-<body>
-<table class="header">
-      <tr>
-        <td style="vertical-align:top">
-          <button type="button" class="nav-btn " id="b1" name="button" onclick="change('b1')" ><i class="fas fa-user-circle icon"> </i> Account</button>
-        </td>
-        <td>
-    <button type="button" class="nav-btn" name="button" id="b2" onclick="change('b2')" ><i class="fas fa-ticket-alt icon"> </i> Bookings</button>
-        </td>
-      </tr>
-    </table>
+<body class="bg-gray-100">
+
+    <div id="bookings"></div>
+    <div id="account"></div>
     <script>
-    change("b1");
-    function change(x){
-      if(x=="b1"){
-          document.getElementById('b1').style.background="white";
-          document.getElementById('b1').style.color="#6366F1";
-          document.getElementById('b2').style.background="#6366F1";
-          document.getElementById('b2').style.color="white";
-        var xhttp = new XMLHttpRequest();
-		 
-	    xhttp.onreadystatechange = function() {
-	    	
-	      if (this.readyState == 4 && this.status == 200) {
-	    	  document.getElementById('matter').innerHTML=this.responseText;
-	      }
-	    };
-	    xhttp.open("GET", "updateprofile",true);
-	    xhttp.send();
-      }
-      else{
-          document.getElementById('b1').style.background="#6366F1";
-          document.getElementById('b1').style.color="white";
-          document.getElementById('b2').style.background="white";
-          document.getElementById('b2').style.color="#6366F1";
+
 
         var xhttp = new XMLHttpRequest();
 		 
 	    xhttp.onreadystatechange = function() {
 	    	
 	      if (this.readyState == 4 && this.status == 200) {
-	    	  document.getElementById('matter').innerHTML=this.responseText;
+	    	  document.getElementById('account').innerHTML=this.responseText;
+	      }
+	    };
+	    xhttp.open("GET", "updateprofile",true);
+	    xhttp.send();
+         xhttp = new XMLHttpRequest();
+		 
+	    xhttp.onreadystatechange = function() {
+	    	
+	      if (this.readyState == 4 && this.status == 200) {
+	    	  document.getElementById('bookings').innerHTML=this.responseText;
 	      }
 	    };
 	    xhttp.open("GET", "trans",true);
 	    xhttp.send();
-      }
-    }
+    
     </script>
-    <div id="matter">    </div>
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.myproject.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,8 @@ public class movies {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int movie_id;
 	private String movie_name;
+	
+	@Column(length = 1000)
 	private String img;
 	public String getImg() {
 		return img;

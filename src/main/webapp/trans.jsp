@@ -1,51 +1,50 @@
 
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<section class="text-gray-600 body-font">
+        <section class="text-gray-600 body-font overflow-hidden">
   <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-wrap -mx-4 -my-8">
-    <c:forEach items="${bookings}" var="book">
-      <div class="py-8 px-4 lg:w-1/3 bg-white m-2 rounded shadow-xl">
-        <div class="h-full flex items-start">
-          <div class="w-24 flex-shrink-0 flex flex-col text-center leading-none">
-            <span class="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">${book.time}</span>
-            <span class="font-medium text-lg text-gray-800 title-font leading-none">Rs. ${book.amount}</span>
-          </div>
-          <div class="flex-grow pl-6">
-            <h2 class="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1">
-            		<c:forEach items="${theatres}" var="entry">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+          <c:forEach items="${bookings}" var="book">
+          <div class="lg:w-1/2 w-full  lg:pr-10  mb-6 mt-6 ">
+          <div class="bg-white p-10 shadow-xl">
+        <h2 class="text-sm title-font text-indigo-500 tracking-widest">
+        <c:forEach items="${theatres}" var="entry">
 			<c:if test = "${entry.key == book.trans_id}" >
 			${entry.value}
 			</c:if>
 		</c:forEach>
-		</h2>
-            <h1 class="title-font text-xl font-medium text-gray-900 mb-3">
-            		<c:forEach items="${movies}" var="entry">
+        </h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
+            <c:forEach items="${movies}" var="entry">
 			<c:if test = "${entry.key == book.trans_id}" >
 			${entry.value}
 			</c:if>
-		</c:forEach>
-		</h1>
-            <p class="leading-relaxed mb-5">
-            <c:forEach items="${tickets}" var="entry">
+		</c:forEach></h1>
+        <p class="leading-relaxed mb-4">
+        <c:forEach items="${tickets}" var="entry">
 			<c:if test = "${entry.key == book.trans_id}" >
 			<h2 class="font-bold">${entry.value}</h2>
 			</c:if>
 		</c:forEach>
-		<br>
-			Booked on ${book.date}
 		</p>
-            <a class="inline-flex items-center">
-              <span class="flex-grow flex flex-col pl-3">
-                <span class="title-font font-medium text-gray-900">${book.trans_id}</span>
-              </span>
-            </a>
-          </div>
+        <div class="flex py-2">
+          <span class="text-gray-500">Show Time</span>
+          <span class="ml-auto text-gray-900">${book.time}</span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">Booking date</span>
+          <span class="ml-auto text-gray-900">${book.date}</span>
+        </div>
+        <div class="flex mt-4">
+          <span class="title-font font-medium text-2xl text-gray-900">Rs. ${book.amount}</span>
+          <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onclick='window.location.href="/success?id=${book.trans_id}"'>Get Receipt</button>
         </div>
       </div>
-      </c:forEach>
       </div>
-    </div>
+            </c:forEach>
+       </div>
+  </div>
 </section>
+
 
  <c:if test = "${bookings.size() == 0 }">
 <div  class="jumbotron text-center font-bold w-1/2 mx-auto" >

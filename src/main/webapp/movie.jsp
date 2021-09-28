@@ -19,45 +19,14 @@
     th{
       color:slateblue;
     }
-    .movie-content{
-      border-radius:12px;
-      	box-shadow: 2px 2px 4px 4px rgba(0,0,0,0.3);
-        margin:20px;
-        background-color:white;
-    }
-    .movie-trailer{
-      width:100%;
-      height:500px;
-      border-radius:12px;
-      box-shadow: 2px 2px 4px 4px rgba(0,0,0,0.3);
-      margin-top:20px;
-    }
-    .date_btn{
-      width:200px;
-      padding:10px;
-      border-radius:0px;
-      margin:10px;
-      color:slateblue;
-      border:1px solid slateblue;
-    }
-    .date_btn:hover,.date_btn:active,.date_btn:focus{
-      background-color:slateblue;
-      color:white;
-    }
+ 
+   
     .time_btn{
       margin:5px;
       padding:10px;
     }
     .heading2{
       padding:10px;
-    }
-    .movie-theater{
-      border-radius:12px;
-      padding:10px;
-      margin-top:20px;
-      margin-left:auto;
-      margin-right:auto;
-      width:70%;
     }
     * {
   box-sizing: border-box;
@@ -240,10 +209,10 @@ function gotomovie(id){
 }
 </script>
 
-<section class="text-gray-600 body-font overflow-hidden">
+<section class="text-gray-600 body-font bg-white overflow-hidden">
   <div class="container px-1 py-4 mx-auto">
     <div class=" mx-auto flex flex-wrap">
-       <iframe  class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"  src="${movie_info.link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+       <iframe  class="lg:w-1/2 w-full lg:h-96 h-64 object-cover object-center rounded"  src="${movie_info.link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest">${movie_info.genre}</h2>
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">${movie.movie_name}</h1>
@@ -377,24 +346,21 @@ function gotomovie(id){
   </div>
 </section>
 
-<br>
-<br>
-<div class="px-1 container">
-<a class="appearance-none block w-40 bg-gray-200 hover:text-gray-900 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
+
+
+<input type="number" id="mmovie_id" value="${movie_info.movie_id}"  hidden/>
+<div class="bg-white  p-4">
+<a class="appearance-none block w-40 bg-white hover:text-gray-900 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
         <i class="fas fa-map-marker-alt"></i> <span id="navbardrop2">${location}</span>
       </a>
-      <div class="dropdown-menu bg-gray-900  p-2">
+      <div class="dropdown-menu text-black bg-indigo-400  p-2">
      <c:forEach items="${alllocations}" var="temp">
         <a class="dropdown-item" href="javascript:void(0)" onclick="filterbyloc('${temp}')">${temp}</a>
         </c:forEach>
       </div>
-</div>
-
-<input type="number" id="mmovie_id" value="${movie_info.movie_id}"  hidden/>
-<div class="jumbotron-fluid text-center">
 <div class="dates">
  <c:forEach items="${dates}" var="date">
-  <button type="button" class="btn  date_btn" onclick="filter_theatres('${date}')" id="${date}">${date}</button>
+  <button type="button" class="inline-flex  transition duration-300 mt-6  border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded" onclick="filter_theatres('${date}')" id="${date}">${date}</button>
   </c:forEach>
   </div>
   <script>
@@ -404,13 +370,20 @@ function gotomovie(id){
   var buttons=dates.getElementsByTagName("button");
   mid=document.getElementById('mmovie_id').value;
 	  function filter_theatres(date){
-		  
-		  document.getElementById(date).style.background="slateblue";
-		  document.getElementById(date).style.color="white";
+		  if(document.getElementById(date).classList.contains("bg-white"))
+		  	document.getElementById(date).classList.remove("bg-white");
+		  if(document.getElementById(date).classList.contains("text-indigo-500"))
+		  	document.getElementById(date).classList.remove("text-indigo-500");
+		  document.getElementById(date).classList.add("bg-indigo-500");
+		  document.getElementById(date).classList.add("text-white");
 		  for(itr=0;itr<buttons.length;itr++){
 			  if(buttons[itr].innerHTML!=date){
-				  document.getElementById(buttons[itr].innerHTML).style.background="white";
-				  document.getElementById(buttons[itr].innerHTML).style.color="slateblue";
+				  if( document.getElementById(buttons[itr].innerHTML).classList.contains("bg-indigo-500"))
+				  	document.getElementById(buttons[itr].innerHTML).classList.remove("bg-indigo-500");
+				  if(document.getElementById(buttons[itr].innerHTML).classList.contains("text-white"))
+				 	 document.getElementById(buttons[itr].innerHTML).classList.remove("text-white");
+				  document.getElementById(buttons[itr].innerHTML).classList.add("bg-white");
+				  document.getElementById(buttons[itr].innerHTML).classList.add("text-indigo-500");
 				  }
 			  }
 		  loc=String(loc_title.innerHTML);

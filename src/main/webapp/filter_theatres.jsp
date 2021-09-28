@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div class=" text-left movie-theater ">
+<div class=" text-left ">
 <c:forEach items="${theatres}" var="theatre">
-<div class="shadow-xl my-4 p-4 bg-white">
+<div class="border-b-2 border-gray-200 py-10  m-10 bg-white">
     <h6 class="font-semibold mb-2">${theatre.tname}</h6>
     <form action="/seatingplan" method="post">
     <input type="hidden" name="tid" value="${theatre.tid}" >
@@ -13,8 +13,14 @@
 		<c:if test = "${time.tid == theatre.tid}" >
 			<c:forEach var="entry" items="${hm}">
 			    <c:if test = "${entry.key == time.id}" >
-			    	<c:if test = "${entry.value != 'default'}" >
-			    		<button type="submit" class="btn btn-outline-${entry.value} time_btn" onclick="document.getElementById('${theatre.tid}').value='${time.time}';">${time.time}</button>
+			    	<c:if test = "${entry.value == 'success'}" >
+			    		<button type="submit" class="inline-flex transition duration-300 mt-6 text-green-500 hover:text-white border-2 border-green-500 py-2 px-5 focus:outline-none hover:bg-green-600 rounded " onclick="document.getElementById('${theatre.tid}').value='${time.time}';">${time.time}</button>
+			    	</c:if>
+			    	<c:if test = "${entry.value == 'warning'}" >
+			    		<button type="submit" class=" inline-flex transition duration-300 mt-6 text-yellow-500 hover:text-white border-2 border-yellow-500 py-2 px-5 focus:outline-none hover:bg-yellow-600 rounded " onclick="document.getElementById('${theatre.tid}').value='${time.time}';">${time.time}</button>
+			    	</c:if>
+			    	<c:if test = "${entry.value == 'danger'}" >
+			    		<button type="submit" class="inline-flex transition duration-300 mt-6 text-red-500 hover:text-white border-2 border-red-500 py-2 px-5 focus:outline-none hover:bg-red-600 rounded " onclick="document.getElementById('${theatre.tid}').value='${time.time}';">${time.time}</button>
 			    	</c:if>
 			    	<c:if test = "${entry.value == 'default'}" >
 			    		<button type="submit" class="btn btn-outline-${entry.value} time_btn" disabled>${time.time}</button>
@@ -30,7 +36,7 @@
  </div>
 </c:forEach>
 <c:if test = "${theatres.size() == 0 }">
-<div class="jumbotron text-center bg-white shadow-xl">
+<div class="p-14 text-center bg-white ">
 <h1 class=" font-bold text-red-500">No Shows Available</h1>
 </div>
 </c:if>

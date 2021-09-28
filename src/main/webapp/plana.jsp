@@ -108,7 +108,7 @@
   <body>
   <div id="matter">
          <header class="jumbotron-fluid text-left">
-<h5 class="heading3">Booking for ${bookingdate}, ${time}</h5>
+<h5 class="float-right mt-4 mr-2 text-white "> ${bookingdate}, ${time}</h5>
       </header>
       <div class="ticket_screen"> 
       
