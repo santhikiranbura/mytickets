@@ -4,7 +4,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>My Tickets</title>
+        <link rel="icon" href="/images/favicon.ico" type="image/gif" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -20,36 +21,24 @@
     <style>
     ::-webkit-scrollbar {
       width: 5px;
+      height: 4px;  
     }
     ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px white;
+      box-shadow: inset 0 0 5px lightgray;
     }
     ::-webkit-scrollbar-thumb {
       background-color:#6366F1;
+      border-radius:12px;
     }
     ::-webkit-scrollbar-thumb:hover {
         background-color:#6366F1;
     }
-      body {
-          background: #fbfbfd;
-      }
-      .ticket{
-        width:40px;
-        font-size:15px;
-        padding:5px;
-        margin:5px;
-        color:white;
-        background-color:#6366F1;
-      }
-      .ticket:hover,.ticket:active,.ticket:focus{
-        color:white;
-        background-color:#6366F1;
-      }
+   
+
       footer{
         left:0;
         bottom:0;
         position:fixed;
-        z-index:2;
         height:0px;
         transition:0.5s;
         width:100%;
@@ -85,42 +74,26 @@
         width:300px;
         float:right;
       }
-      .ticket_screen{
-        margin-top:60px;
-        margin-left:auto;
-        overflow-y:scroll;
-        margin-right:auto;
-        width:1000px;
-        height:500px;
+      #screenid{
+      width:1000px;
+      
       }
       .heading3{
         color:white;
         margin:10px;
       }
-      .theatre_screen{
-        width:500px;
-        margin-left:auto;
-        margin-right:auto;
-        padding:5px;
-      }
     </style>
   </head>
-  <body>
-  <div id="matter">
-         <header class="jumbotron-fluid text-left">
-<h5 class="float-right mt-4 mr-2 text-white "> ${bookingdate}, ${time}</h5>
-      </header>
-      <div class="ticket_screen"> 
+  <body class=" bg-gray-100  bg-opacity-50 ">
+  <div id="matter" >
+      <div class="pt-4 mx-auto overflow-y-scroll   overflow-x-scroll w-full h-96 lg:h-screen"> 
       
-<div class="jumbotron-fluid text-center " id="screenid">
+<div class="jumbotron-fluid text-center shadow-xl bg-white rounded p-6 mx-auto" id="screenid">
 </div>
-<br>
-<br>
-  <div class="jumbotron text-center theatre_screen">
-    Screen
+
+ 
     </div>
-    </div>
-<footer id="footer" class=" text-center">
+<footer id="footer" class="text-center  ">
 <div class="mx-auto">
 <table  class="mx-auto">
 <tr>
@@ -153,10 +126,10 @@
   document.getElementById('screenid').innerHTML="";
   for(i=0;i<gold_tickets.length;i++){
     if(already_booked.indexOf(gold_tickets[i])!=-1){
-      document.getElementById('screenid').innerHTML+="<button type='button' class='btn btn-light ticket' id="+gold_tickets[i]+" name='button' disabled>"+gold_tickets[i]+"</button>";
+      document.getElementById('screenid').innerHTML+="<button type='button' class='text-xs w-8 lg:w-10 lg:text-sm p-1 m-1 cursor-text focus:outline-none border-none rounded text-black bg-gray-200' id="+gold_tickets[i]+" name='button' disabled>"+gold_tickets[i]+"</button>";
     }
     else{
-      document.getElementById('screenid').innerHTML+="<button type='button' class='btn btn-light gold ticket active_ticket' id="+gold_tickets[i]+" name='button'>"+gold_tickets[i]+"</button>";
+      document.getElementById('screenid').innerHTML+="<button type='button' class='text-xs w-8 lg:w-10 lg:text-sm p-1 m-1 transition duration-300 hover:bg-indigo-700 focus:outline-none border-none rounded text-white bg-indigo-500 gold active_ticket' id="+gold_tickets[i]+" name='button'>"+gold_tickets[i]+"</button>";
     }
     if((i+1)%7==0){
       document.getElementById('screenid').innerHTML+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -169,10 +142,10 @@
   document.getElementById('screenid').innerHTML+="<br>";
   for(i=0;i<silver_tickets.length;i++){
     if(already_booked.indexOf(silver_tickets[i])!=-1){
-      document.getElementById('screenid').innerHTML+="<button type='button' class='btn btn-light ticket' id="+silver_tickets[i]+" name='button' disabled>"+silver_tickets[i]+"</button>";
+      document.getElementById('screenid').innerHTML+="<button type='button' class='text-xs w-8 lg:w-10 lg:text-sm p-1 m-1 cursor-text focus:outline-none border-none rounded text-black bg-gray-200' id="+silver_tickets[i]+" name='button' disabled>"+silver_tickets[i]+"</button>";
     }
     else{
-      document.getElementById('screenid').innerHTML+="<button type='button' class='btn btn-light silver ticket active_ticket' id="+silver_tickets[i]+" name='button'>"+silver_tickets[i]+"</button>";
+      document.getElementById('screenid').innerHTML+="<button type='button' class='text-xs w-8 lg:w-10 lg:text-sm p-1 m-1 transition duration-300 hover:bg-indigo-700 focus:outline-none border-none rounded text-white bg-indigo-500 silver  active_ticket' id="+silver_tickets[i]+" name='button'>"+silver_tickets[i]+"</button>";
     }
     if((i+1)%6==0){
       document.getElementById('screenid').innerHTML+='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -192,7 +165,11 @@
               document.getElementById('budget').value=parseInt(document.getElementById('budget').value)-100;
             }
             document.getElementById('paybtn').innerHTML="Pay Rs."+document.getElementById('budget').value;
-            $(this).css("background-color", "#6366F1");
+            $(this).removeClass("bg-green-500");
+            $(this).addClass("bg-indigo-500");
+            $(this).removeClass("hover:bg-green-600");
+            $(this).addClass("hover:bg-indigo-700");
+         
           arr.splice(arr.indexOf(String(this.id)),1);
           document.getElementById('paybtn').style.display="block";
           }
@@ -206,7 +183,10 @@
                       }
                       document.getElementById('paybtn').innerHTML="Pay Rs."+document.getElementById('budget').value;
                       arr.push(String(this.id));
-                      $(this).css("background-color", "#34D399");
+                      $(this).removeClass("bg-indigo-500");
+                      $(this).removeClass("hover:bg-indigo-700");
+                      $(this).addClass("bg-green-500");
+                      $(this).addClass("hover:bg-green-600");
                       document.getElementById('paybtn').style.display="none";
                     }
                 else{

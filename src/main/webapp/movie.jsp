@@ -4,9 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>${temp.movie_name}</title>
+  <title>${movie.movie_name}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/images/favicon.ico" type="image/gif" >
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -15,6 +16,10 @@
   <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/home.css">
+     <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
   <style>
     th{
       color:slateblue;
@@ -166,13 +171,13 @@
   </style>
 </head>
 <body class="bg-gray-100" onload="fun();">
-<nav class="bg-gray-800">
+<nav class="bg-white ">
   <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-20">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
       </div>
  <div class="flex-1 flex  sm:items-stretch sm:justify-start">
-        <div class="flex-shrink-0 flex text-white font-extrabold items-center cursor-pointer"  onclick="window.location.href='/'">
+        <div class="flex-shrink-0 flex  font-extrabold items-center cursor-pointer"  onclick="window.location.href='/'">
     			<img src="/images/MyTickets.png" class="w-8 h-8 rounded-full mr-2" >MyTickets
         </div>
       </div>
@@ -182,16 +187,13 @@
         <a style="margin-top:5px" class="bg-gray-900  text-white px-3 py-2 rounded-md text-sm font-medium" href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
       </c:if>
       <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
-         <div class=" dropdown dropleft">
-      <a class="nav-link text-white  dropdown-toggle" href="javascript:void(0)" id="navbardrop3" data-toggle="dropdown">
-        <i class="fas fa-user"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-left shadow-2xl  bg-gray-700 p-2">
-        <a class="dropdown-item" href="/Account">Account</a>
-        <hr class="border-white my-2">
-        <a class="dropdown-item  text-red-500 " href="/logout">Logout</a>
-      </div>
-    </div>
+         <c:if test = "${pageContext['request'].userPrincipal.principal.enabled != true}">
+        <a style="margin-top:5px" class="bg-gray-900  text-white px-3 py-2 rounded-md text-sm font-medium" href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
+      </c:if>
+      <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
+    <a  href="/Account" ><i class="fas fa-user transition duration-500 rounded-full  p-2 text-indigo-500 hover:text-white  hover:bg-indigo-500 "></i></a>
+      <a  href="/logout"><i class=" rounded-full transition duration-500 fas fa-power-off p-2 text-red-500 hover:text-white  hover:bg-red-500 "></i></a>
+      </c:if>
       </c:if>
       
         </div>
@@ -210,7 +212,7 @@ function gotomovie(id){
 </script>
 
 <section class="text-gray-600 body-font bg-white overflow-hidden">
-  <div class="container px-1 py-4 mx-auto">
+  <div class="container px-3 py-4 mx-auto">
     <div class=" mx-auto flex flex-wrap">
        <iframe  class="lg:w-1/2 w-full lg:h-96 h-64 object-cover object-center rounded"  src="${movie_info.link}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -218,9 +220,9 @@ function gotomovie(id){
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">${movie.movie_name}</h1>
         <div class="flex mb-4">
           <span class="flex items-center">
-            <span class="text-gray-600 ml-3"> ${movie_info.ml}</span>
+            <span class="text-indigo-600 ml-3"> ${movie_info.ml}</span>
           </span>
-          <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+          <span class="flex ml-3 text-indigo-600 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
             ${movie_info.lan}
           </span>
         </div>
@@ -358,9 +360,9 @@ function gotomovie(id){
         <a class="dropdown-item" href="javascript:void(0)" onclick="filterbyloc('${temp}')">${temp}</a>
         </c:forEach>
       </div>
-<div class="dates">
+<div class="dates mt-6">
  <c:forEach items="${dates}" var="date">
-  <button type="button" class="inline-flex  transition duration-300 mt-6  border-0 py-2 px-5 focus:outline-none hover:bg-indigo-600 rounded" onclick="filter_theatres('${date}')" id="${date}">${date}</button>
+  <button type="button" class="inline-flex font-medium text-xs lg:text-lg bg-white transition duration-300 text-black  border-b-2 border-white py-2 lg:px-5 sm:px-3 focus:outline-none hover:bg-indigo-600 " onclick="filter_theatres('${date}')" id="${date}">${date}</button>
   </c:forEach>
   </div>
   <script>
@@ -370,20 +372,20 @@ function gotomovie(id){
   var buttons=dates.getElementsByTagName("button");
   mid=document.getElementById('mmovie_id').value;
 	  function filter_theatres(date){
-		  if(document.getElementById(date).classList.contains("bg-white"))
-		  	document.getElementById(date).classList.remove("bg-white");
-		  if(document.getElementById(date).classList.contains("text-indigo-500"))
-		  	document.getElementById(date).classList.remove("text-indigo-500");
-		  document.getElementById(date).classList.add("bg-indigo-500");
-		  document.getElementById(date).classList.add("text-white");
+		  if(document.getElementById(date).classList.contains("border-white"))
+		  	document.getElementById(date).classList.remove("border-white");
+		  if(document.getElementById(date).classList.contains("text-black"))
+			  	document.getElementById(date).classList.remove("text-black");
+		  document.getElementById(date).classList.add("border-indigo-500");
+		  document.getElementById(date).classList.add("text-indigo-500");
 		  for(itr=0;itr<buttons.length;itr++){
 			  if(buttons[itr].innerHTML!=date){
-				  if( document.getElementById(buttons[itr].innerHTML).classList.contains("bg-indigo-500"))
-				  	document.getElementById(buttons[itr].innerHTML).classList.remove("bg-indigo-500");
-				  if(document.getElementById(buttons[itr].innerHTML).classList.contains("text-white"))
-				 	 document.getElementById(buttons[itr].innerHTML).classList.remove("text-white");
-				  document.getElementById(buttons[itr].innerHTML).classList.add("bg-white");
-				  document.getElementById(buttons[itr].innerHTML).classList.add("text-indigo-500");
+				  if( document.getElementById(buttons[itr].innerHTML).classList.contains("border-indigo-500"))
+				  	document.getElementById(buttons[itr].innerHTML).classList.remove("border-indigo-500");
+				  if( document.getElementById(buttons[itr].innerHTML).classList.contains("text-indigo-500"))
+					  	document.getElementById(buttons[itr].innerHTML).classList.remove("text-indigo-500");
+				  document.getElementById(buttons[itr].innerHTML).classList.add("border-white");
+				  document.getElementById(buttons[itr].innerHTML).classList.add("text-black");
 				  }
 			  }
 		  loc=String(loc_title.innerHTML);
@@ -433,9 +435,6 @@ function fun(){
 </div>
 <br>
 <br>
-
-<hr style="color:black">
-
 
 
 <br>

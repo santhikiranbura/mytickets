@@ -7,6 +7,7 @@
   <title>My Tickets</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/images/favicon.ico" type="image/gif" >
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -29,12 +30,12 @@
     ></script>
 </head>
 <body class="bg-gray-100 ">
-<nav class="bg-gray-800">
+<nav class="bg-white  shadow-md lg:shadow-none fixed w-full">
   <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-20">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div class="absolute inset-y-0 left-0 flex items-center md:hidden">
         <!-- Mobile menu button-->
-        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only" >Open main menu</span>
           <svg class="block h-6 w-6" id="menu-icon" onclick="showMenu();" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -45,41 +46,40 @@
         </button>
       </div>
       <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="flex-shrink-0 flex text-white font-extrabold items-center cursor-pointer"  onclick="window.location.href='/'">
+        <div class="flex-shrink-0 flex  font-extrabold items-center cursor-pointer"  onclick="window.location.href='/'">
     			<img src="/images/MyTickets.png" class="w-8 h-8 rounded-full mr-2" >MyTickets
         </div>
         <div class="hidden sm:block sm:ml-6">
           <div class="flex space-x-8">
              <div class="dropdown">
-				<input type="text" placeholder="Search.." class=" outline-none text-gray-300 bg-gray-700 w-80 hover:text-white px-3 py-2  text-sm font-medium" id="myInput"  autocomplete="off" onkeyup="filterFunction()">
-				    <div id="myDropdown" class="dropdown-content shadow-2xl w-80 bg-gray-700 text-white">
+				<input type="text" placeholder="Search.." class=" outline-none text-gray-700 bg-gray-100 rounded w-80 px-3 py-2  text-sm font-medium" id="myInput"  autocomplete="off" onkeyup="filterFunction()">
+				    <div id="myDropdown" class="dropdown-content shadow-md w-80 bg-white rounded">
 				     <c:forEach items="${movie}" var="temp">
-				    <a href="javascript:void(0)" onclick="gotomovie(${temp.movie_id})">${temp.movie_name}</a>
+				    <a href="javascript:void(0)" class="hover:bg-gray-100  transition duration-300 hover:text-indigo-500 hover:bg-opacity-50 px-5 py-2 mx-1 my-2  rounded-xl" onclick="gotomovie(${temp.movie_id})">${temp.movie_name}</a>
 				    </c:forEach>
 				  </div>
   			</div>
   		 <div class="dropdown w-40">
-	 		<a class="text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
+	 		<a class=" dropdown-toggle w-full text-sm font-medium rounded hover:text-indigo-500 bg-gray-100 px-3 py-2" href="javascript:void(0)"  data-toggle="dropdown">
 	        <i class="fas fa-ad"></i> <span id="navbardrop1">${current_lan}</span>
 	      	</a>
-	      <div class="dropdown-menu shadow-2xl bg-gray-700 p-2">
-	        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbylan('All languages')">All languages</a>
+	      <div class="dropdown-menu shadow-md border-none bg-white p-2">
+	        <a class="dropdown-item hover:text-indigo-500 transition duration-300 focus:bg-gray-100 focus:text-indigo-500" href="javascript:void(0)" onclick="filterbylan('All languages')">All languages</a>
 	      <c:forEach items="${lans}" var="lan">
-	        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbylan('${lan}')">${lan}</a>
+	        <a class="dropdown-item  hover:text-indigo-500 transition duration-300 focus:bg-gray-100 focus:text-indigo-500" href="javascript:void(0)" onclick="filterbylan('${lan}')">${lan}</a>
 	        </c:forEach>
 	      </div>
 	      </div>
 	      <div class="dropdown w-40">
-            <a class=" text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
+            <a class="  dropdown-toggle text-sm font-medium rounded bg-gray-100 px-3 py-2 hover:text-indigo-500" href="javascript:void(0)"  data-toggle="dropdown">
         		<i class="fas fa-map-marker-alt"></i> <span id="navbardrop2">${location}</span>
       		</a>
-		      <div class="dropdown-menu shadow-2xl bg-gray-700 p-2">
+		      <div class="dropdown-menu border-none shadow-md bg-white p-2">
 		      <c:forEach items="${alllocations}" var="loc">
-		        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbyloc('${loc}');" >${loc}</a>
+		        <a class="dropdown-item  hover:text-indigo-500 transition duration-300 focus:bg-gray-100 focus:text-indigo-500" href="javascript:void(0)" onclick="filterbyloc('${loc}');" >${loc}</a>
 		        </c:forEach>
 		      </div>
 		  </div>
-      
       
           </div>
         </div>
@@ -90,49 +90,41 @@
         <a style="margin-top:5px" class="bg-gray-900  text-white px-3 py-2 rounded-md text-sm font-medium" href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
       </c:if>
       <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
-         <div class=" dropdown">
-      <a class="nav-link text-white dropdown-toggle" href="javascript:void(0)" id="navbardrop3" data-toggle="dropdown">
-        <i class="fas fa-user"></i> 
-      </a>
-      <div class="dropdown-menu shadow-2xl bg-gray-700 p-2">
-        <a class="dropdown-item" href="/Account">Account</a>
-        <hr class="border-white my-2">
-        <a class="dropdown-item  text-red-500 " href="/logout">Logout</a>
-      </div>
-    </div>
+    <a  href="/Account" ><i class="fas fa-user  rounded-full  p-2 text-indigo-500 hover:text-white transition duration-500  hover:bg-indigo-500 "></i></a>
+      <a  href="/logout"><i class=" rounded-full fas fa-power-off p-2 text-red-500 hover:text-white transition duration-500  hover:bg-red-500 "></i></a>
       </c:if>
         </div>
       </div>
     </div>
   </div>
-  <div class="hidden transition duration-500 ease-in-out" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1">
+  <div class="hidden transition  duration-500 " id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 ">
     <div class="dropdown">
-				<input type="text" placeholder="Search.." class=" outline-none text-gray-300 bg-gray-700 w-full hover:text-white px-3 py-2  text-sm font-medium" id="mobmyInput"  autocomplete="off" onkeyup="mobfilterFunction()">
-				    <div id="mobmyDropdown" class="dropdown-content shadow-2xl w-full bg-gray-700 text-white">
+				<input type="text" placeholder="Search.." class="outline-none w-full text-gray-700 bg-gray-100 rounded w-80 px-3 py-2  text-sm font-medium" id="mobmyInput"  autocomplete="off" onkeyup="mobfilterFunction()">
+				    <div id="mobmyDropdown" class="dropdown-content shadow-md w-full bg-white ">
 				     <c:forEach items="${movie}" var="temp">
-				    <a href="javascript:void(0)" onclick="gotomovie(${temp.movie_id})">${temp.movie_name}</a>
+				    <a href="javascript:void(0)" class="hover:bg-gray-100  transition duration-300 hover:text-indigo-500 hover:bg-opacity-50 px-5 py-2 mx-1 my-2  rounded-xl" onclick="gotomovie(${temp.movie_id})">${temp.movie_name}</a>
 				    </c:forEach>
 				  </div>
   			</div>
   		 <div class="dropdown w-40 my-3">
-	 		<a class="text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
+	 		<a class="w-full  dropdown-toggle text-sm font-medium rounded hover:text-indigo-500 bg-gray-100 px-3 py-2" href="javascript:void(0)"  data-toggle="dropdown">
 	        <i class="fas fa-ad"></i> <span id="mobnavbardrop1">${current_lan}</span>
 	      	</a>
-	      <div class="dropdown-menu shadow-2xl bg-gray-700 p-2">
-	        <a class="dropdown-item" href="javascript:void(0)" onclick="mobfilterbylan('All languages')">All languages</a>
+	      <div class="dropdown-menu shadow-md border-none bg-white p-2">
+	        <a   class="dropdown-item  hover:text-indigo-500 transition duration-300 focus:bg-gray-100 focus:text-indigo-500"  href="javascript:void(0)" onclick="mobfilterbylan('All languages')">All languages</a>
 	      <c:forEach items="${lans}" var="lan">
-	        <a class="dropdown-item" href="javascript:void(0)" onclick="mobfilterbylan('${lan}')">${lan}</a>
+	        <a  class="dropdown-item hover:text-indigo-500 transition duration-300 focus:bg-gray-100 focus:text-indigo-500"  href="javascript:void(0)" onclick="mobfilterbylan('${lan}')">${lan}</a>
 	        </c:forEach>
 	      </div>
 	      </div>
 	      <div class="dropdown w-40 my-3">
-            <a class=" text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
+            <a class=" dropdown-toggle text-sm font-medium rounded hover:text-indigo-500 bg-gray-100 px-3 py-2" href="javascript:void(0)"  data-toggle="dropdown">
         		<i class="fas fa-map-marker-alt"></i> <span id="mobnavbardrop2">${location}</span>
       		</a>
-		      <div class="dropdown-menu shadow-2xl bg-gray-700 p-2">
+		      <div class="dropdown-menu shadow-md border-none bg-white p-2">
 		      <c:forEach items="${alllocations}" var="loc">
-		        <a class="dropdown-item" href="javascript:void(0)" onclick="mobfilterbyloc('${loc}');" >${loc}</a>
+		        <a   class="dropdown-item  hover:text-indigo-500 transition duration-300  focus:bg-gray-100 focus:text-indigo-500"  href="javascript:void(0)" onclick="mobfilterbyloc('${loc}');" >${loc}</a>
 		        </c:forEach>
 		      </div>
 		  </div>
@@ -140,80 +132,66 @@
         <a style="margin-top:5px" class="bg-gray-900  text-white px-3 py-2 rounded-md text-sm font-medium" href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
       </c:if>
       <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
-         <div class=" dropdown my-3">
-      <a class=" text-white dropdown-toggle" href="javascript:void(0)" id="mobnavbardrop3" data-toggle="dropdown">
-        <i class="fas fa-user"></i> ${username}
-      </a>
-      <div class="dropdown-menu shadow-2xl bg-gray-700 p-2">
-        <a class="dropdown-item" href="/Account">Account</a>
-        <hr class="border-white my-2">
-        <a class="dropdown-item  text-red-500 " href="/logout">Logout</a>
-      </div>
-    </div>
+        <a class="bg-gray-100 px-3 py-2 font-medium text-sm rounded" href="/Account">   <i class="fas fa-user"></i> Account</a>
+        <hr class="m-4">
+        <a class="bg-gray-100 px-3 py-2 font-medium text-sm text-red-500 " href="/logout">Not ${username}? Logout</a>
       </c:if>
       
     </div>
   </div>
 </nav>
-<!-- >nav class="navbar navbar-expand-md  navbar-dark" >
-  <a class="navbar-brand" href="/">
-  <h2>My Tickets</h2></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-    <div class="dropdown">
-<input type="text" placeholder="Search.." class="form-control" id="myInput" style="width:53vw;" autocomplete="off" onkeyup="filterFunction()">
-    <div id="myDropdown" class="dropdown-content">
-     <c:forEach items="${movie}" var="temp">
-    <a href="javascript:void(0)" onclick="gotomovie(${temp.movie_id})">${temp.movie_name}</a>
-    </c:forEach>
-  </div>
-  </div>
- 
-  <li class="nav-item dropdown">
-      <a class="nav-link text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
-        <i class="fas fa-ad"></i> <span id="navbardrop1">${current_lan}</span>
-      </a>
-      <div class="dropdown-menu ">
-              <a class="dropdown-item" href="javascript:void(0)" onclick="filterbylan('All languages')">All languages</a>
-      <c:forEach items="${lans}" var="lan">
-        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbylan('${lan}')">${lan}</a>
-        </c:forEach>
-      </div>
-    </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link text-white dropdown-toggle" href="javascript:void(0)"  data-toggle="dropdown">
-        <i class="fas fa-map-marker-alt"></i> <span id="navbardrop2">${location}</span>
-      </a>
-      <div class="dropdown-menu ">
-      <c:forEach items="${alllocations}" var="loc">
-        <a class="dropdown-item" href="javascript:void(0)" onclick="filterbyloc('${loc}');" >${loc}</a>
-        </c:forEach>
-      </div>
 
-    </li>
-    <c:if test = "${pageContext['request'].userPrincipal.principal.enabled != true}">
-    <li class="nav-item">
-        <a class="nav-link text-white " href="/login" ><i class="fas fa-user"></i>&nbsp;&nbsp;Login</a>
-      </li>
-      </c:if>
-      <c:if test = "${pageContext['request'].userPrincipal.principal.enabled == true}">
-         <li class="nav-item dropdown">
-      <a class="nav-link text-white dropdown-toggle" href="javascript:void(0)" id="navbardrop2" data-toggle="dropdown">
-        <i class="fas fa-user"></i> ${username}
-      </a>
-      <div class="dropdown-menu ">
-        <a class="dropdown-item" href="/Account">Account</a>
-        <a class="dropdown-item" href="/logout">Logout</a>
+     
+<section class="text-gray-600 body-font bg-white">
+  <div class="container mx-auto flex px-5 pb-6 pt-24 md:flex-row flex-col items-center">
+    <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Book a Ticket
+      </h1>
+      <p class="mb-8 leading-relaxed">Cinema is a matter of what's in the frame and what's out. -Martin Scorsese
+
+      </p>
+      <div class="flex justify-center">
+        <button onclick="window.location.href='/login'" class="font-medium inline-flex text-white bg-indigo-500 border-0 py-2 sm:px-2 lg:px-6 focus:outline-none hover:bg-indigo-600 rounded text-xs lg:text-lg">Get Started</button>
+        <button class="font-medium ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-2 lg:px-6 focus:outline-none hover:bg-gray-200 rounded text-xs lg:text-lg">Launch your Theatre</button>
       </div>
-    </li>
-      </c:if>
-    </ul>
+    </div>
+    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 hidden lg:block">
+      <img class="object-cover object-center rounded" alt="hero" src="https://media.istockphoto.com/vectors/movie-tickets-online-sale-tiny-people-buy-or-book-tickets-on-the-vector-id1266582056?k=20&m=1266582056&s=170667a&w=0&h=pwRkU7KMw2Piq-CgMvv9PMdxXSGB8CKyyixSJYgRw8A=">
+    </div>
   </div>
-</nav-->
-      <script>
+</section>
+<div id="matter">
+<section   class="text-gray-600 body-font">
+  <div class="container px-5 py-12 mx-auto">
+    <div class="flex flex-wrap -m-12 lg:-m-4">
+    <c:forEach items="${movie}" var="temp">
+      <div class="xl:w-1/5 w-1/2 md:w-1/4 p-2 lg:p-4 ">
+        <div class="bg-white xs:p-2 p-6 rounded-lg cursor-pointer shadow-md duration-500 hover:shadow-2xl"  onclick="gotomovie(${temp.movie_id})" >
+          <img class="h-48 rounded w-full object-cover object-center mb-6" src="${temp.img }" alt="content">
+          <h2 class="text-xs xl:text-sm text-gray-900 font-bold title-font mb-4">${temp.movie_name}</h2>
+        </div>
+      </div>
+      </c:forEach>
+    </div>
+  </div>
+</section>
+</div>
+
+ <c:if test = "${movie.size() == 0 }">
+ <div class="lg:w-1/2  mx-auto px-3">
+<div id="nomovies" class="jumbotron text-center font-bold " >
+<h1>No Movies Available !!</h1>
+</div>
+</div>
+</c:if>
+<br>
+<br>
+<br>
+<br>
+<form id="movie_form" action="movie" method="POST">
+<input name="movie_id" id="movie_id" style="display:none"/>
+</form>
+ <script>
 
       function filterFunction() {
         let input = document.getElementById("myInput");
@@ -239,7 +217,6 @@
       var lan_title=document.getElementById('navbardrop1');
       var loc_title=document.getElementById('navbardrop2');
       function filterbylan(lan){
-    	  document.getElementById('nomovies').style.display="none";
     	  lan_title.innerHTML=lan;
     	  var xhttp = new XMLHttpRequest();
     	    xhttp.onreadystatechange = function() {
@@ -251,7 +228,6 @@
     	    xhttp.send();
           }
       function filterbyloc(loc){
-    	  document.getElementById('nomovies').style.display="none";
     	  loc_title.innerHTML=loc;
     	  var xhttp = new XMLHttpRequest();
   	    xhttp.onreadystatechange = function() {
@@ -288,7 +264,6 @@
       var moblan_title=document.getElementById('mobnavbardrop1');
       var mobloc_title=document.getElementById('mobnavbardrop2');
       function mobfilterbylan(lan){
-    	  document.getElementById('nomovies').style.display="none";
     	  moblan_title.innerHTML=lan;
     	  var xhttp = new XMLHttpRequest();
     	    xhttp.onreadystatechange = function() {
@@ -300,7 +275,6 @@
     	    xhttp.send();
           }
       function mobfilterbyloc(loc){
-          document.getElementById('nomovies').style.display="none";
     	  mobloc_title.innerHTML=loc;
     	  var xhttp = new XMLHttpRequest();
   	    xhttp.onreadystatechange = function() {
@@ -313,53 +287,6 @@
         }
  
       </script>
-<section class="text-gray-600 body-font bg-white">
-  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-    <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Book a Ticket
-      </h1>
-      <p class="mb-8 leading-relaxed">Cinema is a matter of what's in the frame and what's out. --Martin Scorsese
-
-      </p>
-      <div class="flex justify-center">
-        <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Get Started</button>
-        <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Launch your Theatre</button>
-      </div>
-    </div>
-    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img class="object-cover object-center rounded" alt="hero" src="https://media.istockphoto.com/vectors/movie-tickets-online-sale-tiny-people-buy-or-book-tickets-on-the-vector-id1266582056?k=20&m=1266582056&s=170667a&w=0&h=pwRkU7KMw2Piq-CgMvv9PMdxXSGB8CKyyixSJYgRw8A=">
-    </div>
-  </div>
-</section>
-<div id="matter">
-<section   class="text-gray-600 body-font">
-  <div class="container px-5 py-12 mx-auto">
-    <div class="flex flex-wrap -m-4">
-    <c:forEach items="${movie}" var="temp">
-      <div class="xl:w-1/4 md:w-1/2 p-4 ">
-        <div class="bg-white p-6 rounded-lg cursor-pointer shadow-md duration-500 hover:shadow-2xl"  onclick="gotomovie(${temp.movie_id})" >
-          <img class="h-84 rounded w-full object-cover object-center mb-6" src="${temp.img }" alt="content">
-          <h2 class="text-md text-gray-900 font-bold title-font mb-4">${temp.movie_name}</h2>
-        </div>
-      </div>
-      </c:forEach>
-    </div>
-  </div>
-</section>
-</div>
-
- <c:if test = "${movie.size() == 0 }">
-<div id="nomovies" class="jumbotron text-center font-bold w-1/2 mx-auto" >
-<h1>No Movies Available !!</h1>
-</div>
-</c:if>
-<br>
-<br>
-<br>
-<br>
-<form id="movie_form" action="movie" method="POST">
-<input name="movie_id" id="movie_id" style="display:none"/>
-</form>
 <script>
 
 function gotomovie(id){

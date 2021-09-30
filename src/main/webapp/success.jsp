@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title></title>
+      <title>My Tickets | Success</title>
+        <link rel="icon" href="/images/favicon.ico" type="image/gif" >
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -51,10 +52,10 @@ color:white;
 
   </style>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-white">
   <section class=" body-font overflow-hidden">
-  <div class="container px-5 mt-12 shadow-xl mb-12 bg-white py-12 mx-auto">
-  <div class="text-green-500 text-3xl  text-center mb-7">
+  <div class="container px-5 mt-12  mb-12  py-12 mx-auto">
+  <div class="text-green-500 text-md lg:text-3xl  text-center mb-7">
     <i class="fas fa-check text-white rounded-full p-2 bg-green-500"></i>&nbsp;Successfully Booked
   </div>
     <div class="lg:w-4/5 mx-auto flex flex-wrap ">

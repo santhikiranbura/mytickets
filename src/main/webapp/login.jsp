@@ -66,10 +66,10 @@
                 </span>
               </button>
               </form>
-              <center>
-              <br>
-              <b>Don't have an account? <a href="/register" style="color:slateblue;text-decoration:underline">Register</a> now!</b>
-              </center>
+				
+              <div class="text-center mt-3">
+              <b class="text-xs  lg:text-sm">Don't have an account? <a href="/register" style="color:slateblue;text-decoration:underline">Register</a> now!</b>
+            </div>
             </div>
           </div>
         </div>
